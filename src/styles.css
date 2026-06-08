@@ -5,46 +5,51 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Bahá'í of Volusia County — custom DaisyUI theme
-   A serene, modern palette: deep ocean indigo, warm temple gold, sea-glass
-   teal and a soft cream canvas — echoing both the Bahá'í aesthetic and the
-   Atlantic coast of Volusia County.
+   Bahá'ís of Volusia County — visual identity matched to bahai.us: square
+   edges, a signature red primary with a greenish-blue (teal) secondary and
+   warm-gold accents on a soft cream canvas, classical serif headings.
 --------------------------------------------------------------------------- */
 @plugin "daisyui/theme" {
-  name: "bahai";
+  name: 'bahai';
   default: true;
   prefersdark: false;
   color-scheme: light;
 
-  --color-base-100: oklch(99% 0.005 95);
-  --color-base-200: oklch(96.5% 0.008 92);
-  --color-base-300: oklch(92.5% 0.012 90);
-  --color-base-content: oklch(27% 0.025 264);
+  /* Warm cream canvas + warm charcoal ink */
+  --color-base-100: oklch(97.5% 0.012 85);
+  --color-base-200: oklch(95% 0.016 82);
+  --color-base-300: oklch(89% 0.022 80);
+  --color-base-content: oklch(27% 0.02 60);
 
-  --color-primary: oklch(44% 0.13 264);
-  --color-primary-content: oklch(98% 0.01 264);
+  /* Signature red ≈ #ac1a1c — the dominant hue, matching bahai.us */
+  --color-primary: oklch(48% 0.18 27);
+  --color-primary-content: oklch(97.5% 0.014 85); /* cream ≈ #fbf6ec */
 
-  --color-secondary: oklch(60% 0.085 215);
-  --color-secondary-content: oklch(98% 0.01 215);
+  /* Greenish-blue / teal ≈ #208089 — the bahai.us secondary / highlight hue */
+  --color-secondary: oklch(55% 0.085 205);
+  --color-secondary-content: oklch(98% 0.012 205); /* near-white ≈ #f0fbfc */
 
-  --color-accent: oklch(77% 0.13 78);
-  --color-accent-content: oklch(28% 0.06 70);
+  /* Warm gold ≈ #cfa25a — line-art motifs, eyebrow rules, highlights */
+  --color-accent: oklch(74% 0.105 78);
+  --color-accent-content: oklch(30% 0.05 60); /* dark brown ≈ #402712 */
 
-  --color-neutral: oklch(30% 0.03 264);
-  --color-neutral-content: oklch(96% 0.01 264);
+  /* Deep warm brown ≈ #352119 — footer & dark bands */
+  --color-neutral: oklch(27% 0.035 40);
+  --color-neutral-content: oklch(95% 0.018 85); /* cream ≈ #f4eee1 */
 
-  --color-info: oklch(62% 0.1 230);
+  --color-info: oklch(55% 0.09 230); /* blue ≈ #2e7b9c */
   --color-info-content: oklch(98% 0.01 230);
-  --color-success: oklch(64% 0.13 155);
-  --color-success-content: oklch(98% 0.01 155);
-  --color-warning: oklch(80% 0.13 80);
-  --color-warning-content: oklch(28% 0.06 70);
-  --color-error: oklch(60% 0.18 25);
-  --color-error-content: oklch(98% 0.01 25);
+  --color-success: oklch(60% 0.13 70); /* amber ≈ #b17000 */
+  --color-success-content: oklch(20% 0.04 60);
+  --color-warning: oklch(74% 0.12 80); /* gold ≈ #d2a249 */
+  --color-warning-content: oklch(28% 0.05 60);
+  --color-error: oklch(50% 0.17 27);
+  --color-error-content: oklch(98% 0.01 27);
 
-  --radius-selector: 1rem;
-  --radius-field: 0.625rem;
-  --radius-box: 1.25rem;
+  /* Square shape language — no rounded corners */
+  --radius-selector: 0;
+  --radius-field: 0;
+  --radius-box: 0;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
   --border: 1px;
@@ -52,10 +57,12 @@
   --noise: 0;
 }
 
-/* Typeface system: an elegant modern serif for display, clean sans for UI. */
+/* Typefaces: a classical high-contrast serif for display, clean sans for UI,
+   and a flowing script reserved for the hero signature. */
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-serif: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: 'Cormorant Garamond', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-script: 'Dancing Script', 'Cormorant Garamond', ui-serif, cursive;
 }
 
 @layer base {
@@ -76,11 +83,15 @@
 }
 
 @layer utilities {
-  /* Display serif with optical-size flair from Fraunces. */
+  /* Classical display serif. */
   .font-display {
     font-family: var(--font-serif);
-    font-optical-sizing: auto;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
+  }
+
+  /* Flowing script — hero signature only. */
+  .font-script {
+    font-family: var(--font-script);
   }
 
   /* Section eyebrow label. */
@@ -91,17 +102,36 @@
     font-size: 0.8rem;
   }
 
-  /* Soft gradient text used on key headlines. */
-  .text-gradient {
-    background-image: linear-gradient(
-      120deg,
-      var(--color-primary) 0%,
-      var(--color-secondary) 55%,
-      var(--color-accent) 110%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  /* Footer navigation link — muted on the dark band, gold on hover/focus. */
+  .footer-link {
+    @apply text-neutral-content/85 transition hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+
+  /* Primary navbar link (desktop). */
+  .nav-link {
+    @apply px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-base-content/70 transition hover:bg-base-200 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+  }
+
+  /* Primary navbar link, stacked variant shown in the mobile drawer. */
+  .nav-link-mobile {
+    @apply block px-3 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-base-content/80 transition hover:bg-base-200 hover:text-primary;
+  }
+
+  /* Centered label flanked by thin gold rules — bahai.us section style. */
+  .rule-heading {
+    display: flex;
+    width: fit-content;
+    margin-inline: auto;
+    align-items: center;
+    justify-content: center;
+    gap: 1.1rem;
+  }
+  .rule-heading::before,
+  .rule-heading::after {
+    content: '';
+    height: 1px;
+    width: clamp(1.75rem, 7vw, 4.5rem);
+    background: color-mix(in oklch, var(--color-accent) 75%, transparent);
   }
 
   /* Gentle entrance used by sections as they enter the viewport. */
@@ -117,6 +147,15 @@
   .animate-float {
     animation: float 9s ease-in-out infinite;
   }
+}
+
+/* Button shape & feel matched to bahai.us: square, uppercase, letter-spaced.
+   Unlayered so it reliably tops the daisyUI component defaults. */
+.btn {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
 }
 
 @keyframes reveal-in {

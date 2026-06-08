@@ -1,26 +1,23 @@
-/* Hero: a layered "aurora" of brand colours over a deep indigo base. */
-.hero-aurora {
+/* Hero photograph: the Baháʼí House of Worship in Wilmette, Illinois. Self-hosted
+   in /public and applied as a background-image so a failed load falls back to the
+   deep warm colour beneath — no broken-image icon. The image is portrait, so the
+   crop is biased upward to keep the dome and façade framed on wide viewports. */
+.hero-photo {
+  background-color: oklch(30% 0.08 30);
+  background-image: url('/img/house-of-worship.png');
+  background-size: cover;
+  background-position: center 18%;
+}
+
+/* Hero photo overlay: a deep crimson wash laid over the photograph so the
+   script headline and white CTAs stay legible. */
+.hero-overlay {
   background:
-    radial-gradient(
-      55% 45% at 16% 8%,
-      color-mix(in oklch, var(--color-secondary) 60%, transparent) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      45% 45% at 88% 14%,
-      color-mix(in oklch, var(--color-accent) 42%, transparent) 0%,
-      transparent 55%
-    ),
-    radial-gradient(
-      75% 55% at 50% 108%,
-      color-mix(in oklch, var(--color-primary) 85%, black 12%) 0%,
-      transparent 72%
-    ),
     linear-gradient(
-      160deg,
-      var(--color-primary) 0%,
-      oklch(30% 0.07 264) 52%,
-      var(--color-neutral) 100%
+      165deg,
+      color-mix(in oklch, var(--color-neutral) 88%, transparent) 0%,
+      color-mix(in oklch, var(--color-primary) 82%, transparent) 55%,
+      color-mix(in oklch, var(--color-neutral) 90%, transparent) 100%
     );
 }
 
@@ -29,18 +26,18 @@
   background: linear-gradient(180deg, var(--color-base-100) 0%, var(--color-base-200) 100%);
 }
 
-/* Full-width scripture band. */
+/* Full-width scripture band, deep crimson. */
 .quote-band {
   background:
     radial-gradient(
       60% 80% at 50% 0%,
-      color-mix(in oklch, var(--color-secondary) 35%, transparent) 0%,
+      color-mix(in oklch, var(--color-accent) 22%, transparent) 0%,
       transparent 70%
     ),
-    linear-gradient(135deg, var(--color-primary) 0%, oklch(32% 0.07 264) 100%);
+    linear-gradient(135deg, var(--color-primary) 0%, oklch(26% 0.08 28) 100%);
 }
 
 /* Inline quote medallion in the welcome section. */
 .quote-card {
-  background: linear-gradient(140deg, var(--color-primary) 0%, oklch(34% 0.08 262) 100%);
+  background: linear-gradient(140deg, var(--color-primary) 0%, oklch(28% 0.09 30) 100%);
 }

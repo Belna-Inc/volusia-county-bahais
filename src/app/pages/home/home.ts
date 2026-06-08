@@ -22,7 +22,20 @@ interface Activity {
   styleUrl: './home.css',
 })
 export class Home {
-  /** The three central truths the Bahá'í teachings turn upon. */
+  /** The Manifestations of God, in the order the Bahá’í writings present them. */
+  protected readonly manifestations: readonly string[] = [
+    'Abraham',
+    'Krishna',
+    'Zoroaster',
+    'Moses',
+    'Buddha',
+    'Jesus',
+    'Muḥammad',
+    'the Báb',
+    'Bahá’u’lláh',
+  ];
+
+  /** The three central truths the Bahá’í teachings turn upon. */
   protected readonly principles: readonly Principle[] = [
     {
       title: 'The Oneness of God',
@@ -30,12 +43,24 @@ export class Home {
     },
     {
       title: 'The Oneness of Religion',
-      body: 'Religion is one unfolding story. Krishna, Moses, Buddha, Jesus, Muḥammad, the Báb and Bahá’u’lláh each renewed humanity’s relationship with the same God.',
+      body: 'The world’s great religions are successive chapters of one faith. Each Manifestation of God renews humanity’s relationship with the same God for a new age.',
     },
     {
       title: 'The Oneness of Humanity',
-      body: 'Humanity is a single family. Prejudice of every kind must give way to the truth that we are the leaves of one tree and the flowers of one garden.',
+      body: 'Humanity is a single family. Bahá’u’lláh taught that prejudice of every kind must give way to the recognition that we are the leaves of one tree.',
     },
+  ];
+
+  /** Core social teachings, as the Faith is commonly introduced. */
+  protected readonly teachings: readonly string[] = [
+    'The independent investigation of truth',
+    'The oneness of the entire human race',
+    'The equality of women and men',
+    'The harmony of science and religion',
+    'The elimination of all forms of prejudice',
+    'Universal education for every child',
+    'A spiritual solution to economic injustice',
+    'The foundation of a lasting, universal peace',
   ];
 
   /** The grassroots activities open to everyone in the community. */
@@ -85,10 +110,15 @@ export class Home {
   /**
    * Opens the visitor's mail client pre-filled with their message.
    * Runs only on user submit, so it is safe under server-side rendering.
+   *
+   * TODO: hello@volusiabahais.org is a PLACEHOLDER address. Replace it (here and
+   * in the footer) with the real community inbox before going live.
    */
   protected sendMessage(event: Event, name: string, email: string, message: string): void {
     event.preventDefault();
-    const subject = encodeURIComponent(`Hello from ${name.trim() || 'a friend'} — Volusia County Bahá’ís`);
+    const subject = encodeURIComponent(
+      `Hello from ${name.trim() || 'a friend'} — Volusia County Bahá’ís`,
+    );
     const body = encodeURIComponent(
       `${message.trim()}\n\n— ${name.trim()}${email.trim() ? `\n${email.trim()}` : ''}`,
     );

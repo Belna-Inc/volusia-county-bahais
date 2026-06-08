@@ -1,0 +1,98 @@
+<nav
+  class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
+  aria-label="Primary"
+>
+  <!-- Brand -->
+  <a
+    href="#top"
+    class="group flex items-center gap-3 py-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+    (click)="close()"
+  >
+    <img
+      src="/img/logo.png"
+      alt="Bahá’ís of Volusia County"
+      width="36"
+      height="36"
+      class="size-9 transition-transform duration-500 group-hover:scale-105"
+    />
+    <span class="flex flex-col leading-[1.05]">
+      <span
+        class="font-display text-xl font-bold uppercase tracking-[0.12em] text-base-content sm:text-2xl"
+      >
+        Bahá’ís
+      </span>
+      <span
+        class="font-display text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-base-content/60"
+      >
+        of Volusia County
+      </span>
+    </span>
+  </a>
+
+  <!-- Desktop links -->
+  <ul class="hidden items-center gap-1 lg:flex">
+    @for (link of links; track link.fragment) {
+      <li>
+        <a [href]="'#' + link.fragment" class="nav-link">
+          {{ link.label }}
+        </a>
+      </li>
+    }
+  </ul>
+
+  <div class="flex items-center gap-2">
+    <a href="#connect" class="btn btn-primary btn-sm hidden sm:inline-flex">Connect</a>
+
+    <!-- Mobile toggle -->
+    <button
+      type="button"
+      class="btn btn-ghost btn-square btn-sm lg:hidden"
+      [attr.aria-expanded]="menuOpen()"
+      aria-controls="mobile-menu"
+      aria-label="Toggle navigation menu"
+      (click)="toggle()"
+    >
+      @if (menuOpen()) {
+        <svg
+          class="size-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      } @else {
+        <svg
+          class="size-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      }
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+@if (menuOpen()) {
+  <div id="mobile-menu" class="border-t border-base-300 bg-base-100 lg:hidden">
+    <ul class="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6">
+      @for (link of links; track link.fragment) {
+        <li>
+          <a [href]="'#' + link.fragment" class="nav-link-mobile" (click)="close()">
+            {{ link.label }}
+          </a>
+        </li>
+      }
+      <li class="pt-1">
+        <a href="#connect" class="btn btn-primary w-full" (click)="close()">Connect with us</a>
+      </li>
+    </ul>
+  </div>
+}

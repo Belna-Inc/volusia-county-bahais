@@ -1,0 +1,2 @@
+/* Sizing and colour are controlled by utility classes on the host element;
+   the SVG inherits currentColor and fills its box. No component styles needed. */
