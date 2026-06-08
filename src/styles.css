@@ -1,1 +1,152 @@
 @import 'tailwindcss';
+
+@plugin "daisyui" {
+  themes: false;
+}
+
+/* ---------------------------------------------------------------------------
+   Bahá'í of Volusia County — custom DaisyUI theme
+   A serene, modern palette: deep ocean indigo, warm temple gold, sea-glass
+   teal and a soft cream canvas — echoing both the Bahá'í aesthetic and the
+   Atlantic coast of Volusia County.
+--------------------------------------------------------------------------- */
+@plugin "daisyui/theme" {
+  name: "bahai";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: oklch(99% 0.005 95);
+  --color-base-200: oklch(96.5% 0.008 92);
+  --color-base-300: oklch(92.5% 0.012 90);
+  --color-base-content: oklch(27% 0.025 264);
+
+  --color-primary: oklch(44% 0.13 264);
+  --color-primary-content: oklch(98% 0.01 264);
+
+  --color-secondary: oklch(60% 0.085 215);
+  --color-secondary-content: oklch(98% 0.01 215);
+
+  --color-accent: oklch(77% 0.13 78);
+  --color-accent-content: oklch(28% 0.06 70);
+
+  --color-neutral: oklch(30% 0.03 264);
+  --color-neutral-content: oklch(96% 0.01 264);
+
+  --color-info: oklch(62% 0.1 230);
+  --color-info-content: oklch(98% 0.01 230);
+  --color-success: oklch(64% 0.13 155);
+  --color-success-content: oklch(98% 0.01 155);
+  --color-warning: oklch(80% 0.13 80);
+  --color-warning-content: oklch(28% 0.06 70);
+  --color-error: oklch(60% 0.18 25);
+  --color-error-content: oklch(98% 0.01 25);
+
+  --radius-selector: 1rem;
+  --radius-field: 0.625rem;
+  --radius-box: 1.25rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+/* Typeface system: an elegant modern serif for display, clean sans for UI. */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Sticky-nav offset so in-page anchors don't hide beneath the navbar. */
+  :where(section[id]) {
+    scroll-margin-top: 5rem;
+  }
+}
+
+@layer utilities {
+  /* Display serif with optical-size flair from Fraunces. */
+  .font-display {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    letter-spacing: -0.01em;
+  }
+
+  /* Section eyebrow label. */
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+
+  /* Soft gradient text used on key headlines. */
+  .text-gradient {
+    background-image: linear-gradient(
+      120deg,
+      var(--color-primary) 0%,
+      var(--color-secondary) 55%,
+      var(--color-accent) 110%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Gentle entrance used by sections as they enter the viewport. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    animation: reveal-in both ease-out;
+    animation-timeline: view();
+    animation-range: entry 0% cover 28%;
+  }
+
+  /* Slow float for decorative star motifs. */
+  .animate-float {
+    animation: float 9s ease-in-out infinite;
+  }
+}
+
+@keyframes reveal-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(6deg);
+  }
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .animate-float {
+    animation: none;
+  }
+}
