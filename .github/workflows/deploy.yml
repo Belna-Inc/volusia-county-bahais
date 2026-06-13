@@ -1,0 +1,52 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment, cancelling in-progress runs on new pushes.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # GitHub Pages serves with Jekyll by default, which ignores files/dirs
+      # starting with an underscore. Disable it so Angular assets are served.
+      - run: touch dist/volusia-county-bahais/browser/.nojekyll
+
+      # SPA fallback: serve index.html for unknown deep links.
+      - run: cp dist/volusia-county-bahais/browser/index.html dist/volusia-county-bahais/browser/404.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/volusia-county-bahais/browser
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
