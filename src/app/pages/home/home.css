@@ -4,7 +4,7 @@
    crop is biased upward to keep the dome and façade framed on wide viewports. */
 .hero-photo {
   background-color: oklch(30% 0.08 30);
-  background-image: url('/img/daytona-beach.jpg');
+  background-image: url('/volusia-county-bahais/img/daytona-beach.jpg');
   background-size: cover;
   background-position: center 18%;
 }
