@@ -2,10 +2,13 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 /**
  * The nine-pointed star — the most common emblem of the Bahá'í Faith,
- * the number nine signifying completeness and unity.
+ * the number nine signifying completeness and unity. It doubles as the site's
+ * brand mark in the navbar and footer.
  *
- * Renders an inline SVG that inherits `currentColor`, so size and colour are
- * controlled entirely with utility classes on the host, e.g.
+ * The geometry mirrors `public/img/star.svg`, which is the design source; it is
+ * inlined here rather than loaded as an <img> so the mark can inherit
+ * `currentColor` and stay legible on light bands, navy bands and in dark mode.
+ * Size and colour are controlled entirely with utility classes on the host:
  *   <app-star class="size-8 text-accent" />
  *   <app-star variant="outline" class="size-40 text-accent/20" />
  */

@@ -1,0 +1,107 @@
+/* Month grid. `border-separate` with a 1px spacing over a base-300 background
+   gives hairline rules without doubled borders — the same trick the activity
+   cards on the home page use with `gap-px`. */
+.calendar-grid .day-number {
+  color: var(--color-base-content);
+}
+
+/* Days borrowed from the neighbouring months stay in the grid for shape, but
+   recede so the current month reads as a single block. */
+.calendar-grid .is-muted {
+  background-color: color-mix(in oklch, var(--color-base-200) 60%, var(--color-base-100));
+}
+.calendar-grid .is-muted .day-number {
+  color: color-mix(in oklch, var(--color-base-content) 28%, transparent);
+}
+
+/* Today — a gold rule across the top of the cell rather than a ring, which
+   keeps the square shape language intact. */
+.calendar-grid .is-today {
+  box-shadow: inset 0 3px 0 0 var(--color-accent);
+}
+.calendar-grid .is-today .day-number {
+  color: var(--color-primary);
+}
+
+/* Event chip. Square, solid, and it shifts a hair on hover so it reads as
+   something you can click through to the detail below. */
+.event-chip {
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+.event-chip:hover {
+  transform: translateX(2px);
+  background-color: color-mix(in oklch, var(--color-primary) 85%, black);
+}
+
+/* Event detail dialog. The browser positions and centres a modal <dialog> and
+   supplies the backdrop, so this only has to undo the UA chrome and restyle. */
+.event-dialog {
+  /* Centred explicitly rather than relying on the UA's `inset: 0; margin: auto`,
+     which a max-height can knock off-centre. `translate` is a separate property
+     from `transform`, so the open animation below composes on top of it. */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  margin: 0;
+
+  width: min(34rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 4rem);
+  padding: 0;
+  /* Scrolling lives on the inner panel, so the dialog box itself never gets a
+     scrollbar — a scrollbar click would otherwise read as a backdrop click. */
+  overflow: hidden;
+  border: 1px solid var(--color-base-300);
+  background: transparent;
+  color: inherit;
+  box-shadow: 0 40px 90px -35px rgb(0 0 0 / 0.7);
+}
+
+/* The panel scrolls when an event's description runs long. */
+.event-dialog > * {
+  max-height: calc(100dvh - 4rem);
+  overflow-y: auto;
+}
+
+/* A literal colour rather than a theme token: ::backdrop inheritance from the
+   originating element is too recent to rely on across browsers. */
+.event-dialog::backdrop {
+  background: rgb(0 0 0 / 0.66);
+  backdrop-filter: blur(6px);
+}
+
+.event-dialog[open] {
+  animation: dialog-in 0.22s ease-out both;
+}
+
+.event-dialog[open]::backdrop {
+  animation: backdrop-in 0.22s ease-out both;
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.98);
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .event-chip {
+    transition: none;
+  }
+  .event-chip:hover {
+    transform: none;
+  }
+  .event-dialog[open],
+  .event-dialog[open]::backdrop {
+    animation: none;
+  }
+}

@@ -2,13 +2,11 @@
   <div class="grid gap-10 md:grid-cols-12">
     <!-- Brand -->
     <div class="md:col-span-5">
-      <a href="#top" class="flex items-center gap-3">
-        <img
-          src="img/logo.png"
-          alt="Bahá’ís of Volusia County"
-          width="40"
-          height="40"
-          class="size-10"
+      <a routerLink="/" class="flex items-center gap-3">
+        <app-star
+          variant="outline"
+          label="Bahá’ís of Volusia County"
+          class="size-10 text-accent"
         />
         <span class="flex flex-col leading-[1.05]">
           <span class="font-display text-xl font-bold uppercase tracking-[0.12em]">Bahá’ís</span>
@@ -24,11 +22,14 @@
     <!-- Explore -->
     <nav class="md:col-span-3" aria-label="Footer">
       <p class="eyebrow text-accent">Explore</p>
+      <!-- Section links are router links with fragments, so they also work
+           from the calendar page rather than only on the home page. -->
       <ul class="mt-4 space-y-2.5 text-sm">
-        <li><a class="footer-link" href="#welcome">Welcome</a></li>
-        <li><a class="footer-link" href="#faith">The Bahá’í Faith</a></li>
-        <li><a class="footer-link" href="#community">Community Life</a></li>
-        <li><a class="footer-link" href="#connect">Connect</a></li>
+        <li><a class="footer-link" routerLink="/" fragment="welcome">Welcome</a></li>
+        <li><a class="footer-link" routerLink="/" fragment="faith">The Bahá’í Faith</a></li>
+        <li><a class="footer-link" routerLink="/" fragment="community">Community Life</a></li>
+        <li><a class="footer-link" routerLink="/calendar">Calendar</a></li>
+        <li><a class="footer-link" routerLink="/" fragment="connect">Connect</a></li>
       </ul>
     </nav>
 

@@ -1,5 +1,7 @@
+<!-- Targets <main> rather than a section id, so the skip link works on every
+     route and not just the home page. -->
 <a
-  href="#top"
+  href="#main"
   class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-content"
 >
   Skip to content
@@ -7,7 +9,7 @@
 
 <app-navbar />
 
-<main>
+<main id="main" tabindex="-1">
   <router-outlet />
 </main>
 

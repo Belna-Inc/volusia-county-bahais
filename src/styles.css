@@ -6,10 +6,10 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Bahá'ís of Volusia County — a bold, high-contrast reading of the bahai.us
-   identity: square edges, the signature red, warm-gold accents, and classical
-   serif display type set large. Light bands are a warm cream; dark bands are a
-   near-black warm brown, and the page alternates between them.
+   Bahá'ís of Volusia County — a bold, high-contrast Florida coastal palette:
+   deep ocean blue, sea green and shallow-water turquoise, over a shell-white
+   canvas. Square edges and classical serif display type set large. Dark bands
+   are a deep sea navy, and the page alternates between light and dark.
 --------------------------------------------------------------------------- */
 @plugin "daisyui/theme" {
   name: 'bahai';
@@ -17,35 +17,35 @@
   prefersdark: false;
   color-scheme: light;
 
-  /* Warm cream canvas + near-black warm ink */
-  --color-base-100: oklch(97.5% 0.012 85);
-  --color-base-200: oklch(95% 0.016 82);
-  --color-base-300: oklch(89% 0.022 80);
-  --color-base-content: oklch(22% 0.02 60);
+  /* Shell-white canvas with a faint aqua cast + deep navy ink */
+  --color-base-100: oklch(98% 0.006 195);
+  --color-base-200: oklch(95.5% 0.011 195);
+  --color-base-300: oklch(89% 0.017 197);
+  --color-base-content: oklch(22% 0.026 230);
 
-  /* Signature red ≈ #ac1a1c — the dominant hue, matching bahai.us */
-  --color-primary: oklch(48% 0.18 27);
-  --color-primary-content: oklch(97.5% 0.014 85); /* cream ≈ #fbf6ec */
+  /* Deep ocean blue — the dominant hue */
+  --color-primary: oklch(46% 0.125 235);
+  --color-primary-content: oklch(98% 0.008 195);
 
-  /* Greenish-blue / teal ≈ #208089 — the bahai.us secondary / highlight hue */
-  --color-secondary: oklch(55% 0.085 205);
-  --color-secondary-content: oklch(98% 0.012 205); /* near-white ≈ #f0fbfc */
+  /* Sea green / palm — the secondary */
+  --color-secondary: oklch(52% 0.10 168);
+  --color-secondary-content: oklch(98% 0.012 168);
 
-  /* Warm gold ≈ #cfa25a — line-art motifs, eyebrow rules, highlights */
-  --color-accent: oklch(74% 0.105 78);
-  --color-accent-content: oklch(30% 0.05 60); /* dark brown ≈ #402712 */
+  /* Shallow-water turquoise — line-art motifs, eyebrow rules, highlights */
+  --color-accent: oklch(74% 0.115 195);
+  --color-accent-content: oklch(24% 0.04 220);
 
-  /* Near-black warm brown — the dark bands and the footer */
-  --color-neutral: oklch(19% 0.028 40);
-  --color-neutral-content: oklch(95% 0.018 85); /* cream ≈ #f4eee1 */
+  /* Deep sea navy — the dark bands and the footer */
+  --color-neutral: oklch(19% 0.032 225);
+  --color-neutral-content: oklch(95% 0.013 195);
 
-  --color-info: oklch(55% 0.09 230); /* blue ≈ #2e7b9c */
+  --color-info: oklch(58% 0.10 230);
   --color-info-content: oklch(98% 0.01 230);
-  --color-success: oklch(60% 0.13 70); /* amber ≈ #b17000 */
-  --color-success-content: oklch(20% 0.04 60);
-  --color-warning: oklch(74% 0.12 80); /* gold ≈ #d2a249 */
-  --color-warning-content: oklch(28% 0.05 60);
-  --color-error: oklch(50% 0.17 27);
+  --color-success: oklch(56% 0.11 160);
+  --color-success-content: oklch(98% 0.012 160);
+  --color-warning: oklch(76% 0.12 80);
+  --color-warning-content: oklch(26% 0.05 60);
+  --color-error: oklch(52% 0.17 27);
   --color-error-content: oklch(98% 0.01 27);
 
   /* Square shape language — no rounded corners */
@@ -59,10 +59,10 @@
   --noise: 0;
 }
 
-/* Dark counterpart. The light theme's dark bands already establish the near-
-   black warm palette, so this is largely an inversion: the canvas takes the
-   band colour, and gold — which carries the dark bands in the light theme —
-   becomes the dominant highlight. Red is lifted for contrast against black. */
+/* Dark counterpart — deep water rather than night sky. The light theme's dark
+   bands already establish the navy, so this is largely an inversion: the canvas
+   takes the band colour, and turquoise — which carries the dark bands in the
+   light theme — becomes the dominant highlight. Blue is lifted for contrast. */
 @plugin "daisyui/theme" {
   name: 'bahai-dark';
   default: false;
@@ -71,31 +71,31 @@
 
   /* Kept a clear step above --color-neutral below, so the page's alternating
      light/dark bands still read as bands once the palette is inverted. */
-  --color-base-100: oklch(18% 0.016 40);
-  --color-base-200: oklch(22% 0.018 40);
-  --color-base-300: oklch(29% 0.02 40);
-  --color-base-content: oklch(93% 0.015 85);
+  --color-base-100: oklch(18% 0.024 225);
+  --color-base-200: oklch(22% 0.026 225);
+  --color-base-300: oklch(29% 0.028 225);
+  --color-base-content: oklch(93% 0.012 195);
 
-  --color-primary: oklch(58% 0.17 27);
-  --color-primary-content: oklch(98% 0.01 85);
+  --color-primary: oklch(62% 0.13 235);
+  --color-primary-content: oklch(98% 0.008 225);
 
-  --color-secondary: oklch(66% 0.09 205);
-  --color-secondary-content: oklch(16% 0.02 205);
+  --color-secondary: oklch(65% 0.11 168);
+  --color-secondary-content: oklch(16% 0.025 168);
 
-  --color-accent: oklch(78% 0.11 78);
-  --color-accent-content: oklch(20% 0.035 60);
+  --color-accent: oklch(78% 0.12 195);
+  --color-accent-content: oklch(18% 0.03 220);
 
   /* Darker than base-100 so dark bands still separate from the page. */
-  --color-neutral: oklch(11% 0.012 40);
-  --color-neutral-content: oklch(94% 0.016 85);
+  --color-neutral: oklch(11% 0.018 225);
+  --color-neutral-content: oklch(94% 0.012 195);
 
-  --color-info: oklch(68% 0.09 230);
+  --color-info: oklch(70% 0.10 230);
   --color-info-content: oklch(15% 0.02 230);
-  --color-success: oklch(72% 0.12 70);
-  --color-success-content: oklch(16% 0.03 60);
-  --color-warning: oklch(80% 0.11 80);
+  --color-success: oklch(70% 0.12 160);
+  --color-success-content: oklch(16% 0.03 160);
+  --color-warning: oklch(82% 0.11 80);
   --color-warning-content: oklch(18% 0.03 60);
-  --color-error: oklch(62% 0.17 27);
+  --color-error: oklch(64% 0.17 27);
   --color-error-content: oklch(15% 0.02 27);
 
   --radius-selector: 0;
@@ -284,8 +284,8 @@
     @apply text-neutral-content/85 transition hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
   }
 
-  /* Primary navbar link (desktop). The gold underline is the scroll-spy
-     indicator; it grows from the left on hover and on [data-active]. */
+  /* Primary navbar link (desktop). The gold underline grows from the left on
+     hover, and stays put on the active route (routerLinkActive="is-active"). */
   .nav-link {
     @apply relative px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-base-content/70 transition hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
   }
@@ -301,10 +301,10 @@
     transition: transform 0.25s ease;
   }
   .nav-link:hover::after,
-  .nav-link[data-active]::after {
+  .nav-link.is-active::after {
     transform: scaleX(1);
   }
-  .nav-link[data-active] {
+  .nav-link.is-active {
     color: var(--color-primary);
   }
 
@@ -312,7 +312,7 @@
   .nav-link-mobile {
     @apply block border-l-2 border-transparent px-3 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-base-content/80 transition hover:bg-base-200 hover:text-primary;
   }
-  .nav-link-mobile[data-active] {
+  .nav-link-mobile.is-active {
     border-color: var(--color-accent);
     color: var(--color-primary);
   }

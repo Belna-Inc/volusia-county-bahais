@@ -4,16 +4,14 @@
 >
   <!-- Brand -->
   <a
-    href="#top"
+    routerLink="/"
     class="group flex items-center gap-3 py-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
     (click)="close()"
   >
-    <img
-      src="img/logo.png"
-      alt="Bahá’ís of Volusia County"
-      width="36"
-      height="36"
-      class="size-9 transition-transform duration-500 group-hover:scale-105"
+    <app-star
+      variant="outline"
+      label="Bahá’ís of Volusia County"
+      class="size-9 text-primary transition-transform duration-500 group-hover:scale-105"
     />
     <span class="flex flex-col leading-[1.05]">
       <span
@@ -31,13 +29,15 @@
 
   <!-- Desktop links -->
   <ul class="hidden items-center gap-1 lg:flex">
-    @for (link of links; track link.fragment) {
+    @for (link of links; track link.path) {
       <li>
         <a
-          [href]="'#' + link.fragment"
+          [routerLink]="link.path"
+          routerLinkActive="is-active"
+          #rla="routerLinkActive"
+          [routerLinkActiveOptions]="{ exact: link.exact }"
+          [attr.aria-current]="rla.isActive ? 'page' : null"
           class="nav-link"
-          [attr.data-active]="activeFragment() === link.fragment ? '' : null"
-          [attr.aria-current]="activeFragment() === link.fragment ? 'true' : null"
         >
           {{ link.label }}
         </a>
@@ -89,7 +89,9 @@
       }
     </button>
 
-    <a href="#connect" class="btn btn-primary btn-sm hidden sm:inline-flex">Connect</a>
+    <a routerLink="/" fragment="connect" class="btn btn-primary btn-sm hidden sm:inline-flex">
+      Connect
+    </a>
 
     <!-- Mobile toggle -->
     <button
@@ -136,12 +138,13 @@
     animate.leave="menu-leave"
   >
     <ul class="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6">
-      @for (link of links; track link.fragment) {
+      @for (link of links; track link.path) {
         <li>
           <a
-            [href]="'#' + link.fragment"
+            [routerLink]="link.path"
+            routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{ exact: link.exact }"
             class="nav-link-mobile"
-            [attr.data-active]="activeFragment() === link.fragment ? '' : null"
             (click)="close()"
           >
             {{ link.label }}
@@ -149,7 +152,9 @@
         </li>
       }
       <li class="pt-1">
-        <a href="#connect" class="btn btn-primary w-full" (click)="close()">Connect with us</a>
+        <a routerLink="/" fragment="connect" class="btn btn-primary w-full" (click)="close()">
+          Connect with us
+        </a>
       </li>
     </ul>
   </div>

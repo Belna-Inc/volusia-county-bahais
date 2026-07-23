@@ -1,0 +1,281 @@
+<!-- ============================ PAGE HEADER ============================ -->
+<section class="band-dark relative isolate overflow-hidden py-20 sm:py-28">
+  <app-star
+    variant="outline"
+    class="animate-float pointer-events-none absolute -right-16 -top-16 size-72 text-accent/10"
+  />
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <p class="rule-heading-start eyebrow mb-7 text-accent">Gatherings</p>
+    <h1 class="font-display text-headline font-semibold">Calendar</h1>
+    <p class="mt-7 max-w-2xl text-lead text-neutral-content/75">
+      Devotional gatherings, study circles, children’s classes and junior youth groups across
+      Volusia County. Everything here is open to all — there is no need to be a Bahá’í, and no
+      obligation, ever.
+    </p>
+  </div>
+</section>
+
+<!-- ============================ MONTH GRID ============================ -->
+<section class="band-light py-16 sm:py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <!-- Month navigation -->
+    <div class="flex items-center justify-between gap-4 border-b border-base-300 pb-6">
+      <h2 class="font-display text-subhead font-semibold">{{ monthLabel() }}</h2>
+
+      <div class="flex items-center gap-1">
+        <button
+          type="button"
+          class="btn btn-ghost btn-square btn-sm focus-ring"
+          aria-label="Previous month"
+          (click)="previousMonth()"
+        >
+          <svg
+            class="size-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.5 5.5 8 12l6.5 6.5" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="btn btn-ghost btn-square btn-sm focus-ring"
+          aria-label="Next month"
+          (click)="nextMonth()"
+        >
+          <svg
+            class="size-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.5 5.5 16 12l-6.5 6.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Grid. Hairline gaps rather than borders, matching the activity cards
+         on the home page. -->
+    <div class="mt-8 overflow-x-auto">
+      <table class="calendar-grid w-full min-w-[42rem] border-separate border-spacing-px bg-base-300">
+        <caption class="sr-only">
+          Community gatherings for {{ monthLabel() }}
+        </caption>
+        <thead>
+          <tr>
+            @for (day of weekdays; track day) {
+              <th
+                scope="col"
+                class="bg-base-100 px-3 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-base-content/50"
+              >
+                <span aria-hidden="true">{{ day.charAt(0) }}</span>
+                <span class="sr-only">{{ day }}</span>
+              </th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (week of weeks(); track $index) {
+            <tr>
+              @for (cell of week; track cell.key) {
+                <td
+                  class="h-28 w-[14.28%] bg-base-100 p-2 align-top transition-colors"
+                  [class.is-muted]="!cell.inMonth"
+                  [class.is-today]="isToday(cell)"
+                >
+                  <span class="day-number font-display text-lg font-semibold">{{ cell.day }}</span>
+
+                  @for (event of cell.events; track event.title) {
+                    <button
+                      type="button"
+                      class="event-chip mt-1.5 block w-full bg-primary px-2 py-1 text-left text-[0.7rem] font-semibold leading-tight text-primary-content focus-ring"
+                      [attr.aria-label]="
+                        event.title + ' — ' + formatDate(event.date) + ', ' + event.time
+                      "
+                      (click)="openEvent(event)"
+                    >
+                      {{ event.title }}
+                    </button>
+                  }
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ EVENT DETAIL ============================ -->
+<section class="band-dark py-20 sm:py-28">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <p class="eyebrow text-accent">This month</p>
+    <h2 class="mt-5 font-display text-headline font-semibold">
+      {{ monthEvents().length ? 'What’s coming up' : 'Nothing scheduled yet' }}
+    </h2>
+
+    @if (monthEvents().length) {
+      <ul class="mt-12 divide-y divide-neutral-content/15 border-y border-neutral-content/15">
+        @for (event of monthEvents(); track event.title) {
+          <li [id]="'event-' + event.date" class="grid gap-6 py-8 sm:grid-cols-12 sm:gap-10">
+            <p class="sm:col-span-3">
+              <span class="block font-display text-3xl font-semibold text-accent">
+                {{ formatDate(event.date) }}
+              </span>
+              <span class="mt-1 block text-sm text-neutral-content/60">{{ event.time }}</span>
+            </p>
+
+            <div class="sm:col-span-9">
+              <h3 class="font-display text-2xl font-semibold">{{ event.title }}</h3>
+              <p class="mt-1 text-sm uppercase tracking-[0.14em] text-neutral-content/55">
+                {{ event.location }}
+              </p>
+              <p class="mt-4 max-w-2xl leading-relaxed text-neutral-content/75">
+                {{ event.description }}
+              </p>
+            </div>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="mt-7 max-w-2xl text-lead text-neutral-content/75">
+        There’s nothing on the calendar for {{ monthLabel() }}. Use the arrows above to look at
+        another month, or get in touch and we’ll let you know what’s next.
+      </p>
+    }
+
+    <a routerLink="/" fragment="connect" class="btn btn-primary btn-lg mt-12 px-9">
+      Ask about a gathering
+    </a>
+  </div>
+</section>
+
+<!-- ============================ EVENT DIALOG ============================ -->
+<!-- Native <dialog>: showModal() supplies the focus trap, Esc-to-close and the
+     ::backdrop pseudo-element, so none of that needs reimplementing. -->
+<dialog
+  #eventDialog
+  class="event-dialog"
+  aria-labelledby="event-dialog-title"
+  (close)="onDialogClose()"
+  (click)="onDialogClick($event)"
+>
+  @if (selected(); as event) {
+    <div class="relative bg-base-100 p-8 text-base-content sm:p-10">
+      <button
+        type="button"
+        class="btn btn-ghost btn-square btn-sm absolute right-3 top-3 focus-ring"
+        aria-label="Close"
+        (click)="closeEvent()"
+      >
+        <svg
+          class="size-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+
+      <p class="eyebrow text-primary">Gathering</p>
+      <h2 id="event-dialog-title" class="mt-4 max-w-[22ch] font-display text-3xl font-semibold">
+        {{ event.title }}
+      </h2>
+
+      <dl class="mt-8 space-y-5 border-t border-base-300 pt-7">
+        <div class="flex items-start gap-4">
+          <span class="flex size-10 shrink-0 items-center justify-center bg-primary/10 text-primary">
+            <svg
+              class="size-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
+              />
+            </svg>
+          </span>
+          <div>
+            <dt class="eyebrow text-base-content/45">Date &amp; time</dt>
+            <dd class="mt-1 font-medium">{{ selectedDate() }}</dd>
+            <dd class="text-base-content/70">{{ event.time }}</dd>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <span class="flex size-10 shrink-0 items-center justify-center bg-primary/10 text-primary">
+            <svg
+              class="size-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+              />
+            </svg>
+          </span>
+          <div>
+            <dt class="eyebrow text-base-content/45">Location</dt>
+            <dd class="mt-1 font-medium">{{ event.location }}</dd>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <span class="flex size-10 shrink-0 items-center justify-center bg-primary/10 text-primary">
+            <svg
+              class="size-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h10.5"
+              />
+            </svg>
+          </span>
+          <div>
+            <dt class="eyebrow text-base-content/45">Description</dt>
+            <dd class="mt-1 leading-relaxed text-base-content/75">{{ event.description }}</dd>
+          </div>
+        </div>
+      </dl>
+
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a routerLink="/" fragment="connect" class="btn btn-primary flex-1" (click)="closeEvent()">
+          Ask about this
+        </a>
+        <button type="button" class="btn btn-outline flex-1" (click)="closeEvent()">Close</button>
+      </div>
+    </div>
+  }
+</dialog>

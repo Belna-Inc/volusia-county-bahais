@@ -2,7 +2,7 @@
    find it on the first flight; this background colour is what shows through if
    it fails to load — no broken-image icon, and the headline stays legible. */
 .hero-frame {
-  background-color: oklch(19% 0.028 40);
+  background-color: oklch(19% 0.032 225);
 }
 
 /* Hero scrim: dark and opaque at the text edge, clearing toward the right so
@@ -23,9 +23,10 @@
     );
 }
 
-/* Quote block in the welcome section — deep crimson, breaking the gutter. */
+/* Quote block in the welcome section — ocean blue falling away into deep
+   sea green, breaking the container gutter on wide viewports. */
 .quote-card {
-  background: linear-gradient(140deg, var(--color-primary) 0%, oklch(28% 0.09 30) 100%);
+  background: linear-gradient(140deg, var(--color-primary) 0%, oklch(30% 0.075 175) 100%);
 }
 
 /* Stagger the activity cards so the row cascades in rather than arriving all
