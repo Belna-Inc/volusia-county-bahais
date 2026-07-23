@@ -1,11 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Star } from '../../shared/star/star';
 
-interface Principle {
-  readonly title: string;
-  readonly body: string;
-}
-
 interface Activity {
   readonly title: string;
   readonly audience: string;
@@ -35,34 +30,6 @@ export class Home {
     'Bahá’u’lláh',
   ];
 
-  /** The three central truths the Bahá’í teachings turn upon. */
-  protected readonly principles: readonly Principle[] = [
-    {
-      title: 'The Oneness of God',
-      body: 'There is one unknowable, all-loving God — the single source of all creation, who has guided humanity in every age through a succession of divine Educators.',
-    },
-    {
-      title: 'The Oneness of Religion',
-      body: 'The world’s great religions are successive chapters of one faith. Each Manifestation of God renews humanity’s relationship with the same God for a new age.',
-    },
-    {
-      title: 'The Oneness of Humanity',
-      body: 'Humanity is a single family. Bahá’u’lláh taught that prejudice of every kind must give way to the recognition that we are the leaves of one tree.',
-    },
-  ];
-
-  /** Core social teachings, as the Faith is commonly introduced. */
-  protected readonly teachings: readonly string[] = [
-    'The independent investigation of truth',
-    'The oneness of the entire human race',
-    'The equality of women and men',
-    'The harmony of science and religion',
-    'The elimination of all forms of prejudice',
-    'Universal education for every child',
-    'A spiritual solution to economic injustice',
-    'The foundation of a lasting, universal peace',
-  ];
-
   /** The grassroots activities open to everyone in the community. */
   protected readonly activities: readonly Activity[] = [
     {
@@ -89,22 +56,6 @@ export class Home {
       body: 'Young people explore their power to contribute to the world, channeling their energy and idealism toward service alongside caring older mentors.',
       icon: 'M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z',
     },
-  ];
-
-  /** Volusia County communities where Bahá’ís live and serve. */
-  protected readonly communities: readonly string[] = [
-    'Daytona Beach',
-    'Deltona',
-    'DeLand',
-    'Port Orange',
-    'Ormond Beach',
-    'New Smyrna Beach',
-    'DeBary',
-    'Orange City',
-    'Edgewater',
-    'Holly Hill',
-    'Lake Helen',
-    'Pierson',
   ];
 
   /**

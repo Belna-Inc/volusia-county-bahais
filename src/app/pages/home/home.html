@@ -1,55 +1,89 @@
-<!-- Hero -->
-<section id="top" class="relative isolate flex min-h-[88svh] items-center overflow-hidden">
-  <div class="hero-photo absolute inset-0 -z-20"></div>
+<!-- ============================ HERO ============================ -->
+<section id="top" class="hero-frame relative isolate flex min-h-[92svh] items-end overflow-hidden">
+  <picture class="parallax absolute inset-0 -z-20 block">
+    <source
+      type="image/avif"
+      sizes="100vw"
+      srcset="
+        img/daytona-beach-800.avif   800w,
+        img/daytona-beach-1400.avif 1400w,
+        img/daytona-beach-2000.avif 2000w
+      "
+    />
+    <source
+      type="image/webp"
+      sizes="100vw"
+      srcset="
+        img/daytona-beach-800.webp   800w,
+        img/daytona-beach-1400.webp 1400w,
+        img/daytona-beach-2000.webp 2000w
+      "
+    />
+    <img
+      src="img/daytona-beach-1400.jpg"
+      sizes="100vw"
+      srcset="
+        img/daytona-beach-800.jpg   800w,
+        img/daytona-beach-1400.jpg 1400w,
+        img/daytona-beach-2000.jpg 2000w
+      "
+      alt=""
+      fetchpriority="high"
+      decoding="async"
+      class="size-full object-cover object-center"
+    />
+  </picture>
   <div class="hero-overlay absolute inset-0 -z-10"></div>
 
-  <div class="mx-auto w-full max-w-4xl px-4 py-28 text-center text-white sm:px-6">
-    <p class="rule-heading eyebrow mb-7 text-white/85">Bahá’í Community of Volusia County</p>
+  <div class="mx-auto w-full max-w-7xl px-4 pb-20 pt-32 sm:px-6 sm:pb-28 lg:px-8">
+    <p class="rule-heading-start eyebrow mb-8 text-accent">Bahá’í Community of Volusia County</p>
 
-    <h1
-      class="font-script text-6xl font-bold leading-[0.95] drop-shadow-md sm:text-7xl md:text-8xl"
+    <h1 class="font-display text-display max-w-[14ch] font-medium text-white">We are one</h1>
+
+    <p
+      class="mt-8 max-w-2xl font-display text-subhead italic text-white/90"
     >
-      We are one
-    </h1>
-
-    <p class="mx-auto mt-6 max-w-2xl font-display text-2xl italic text-white/90 sm:text-3xl">
       One human family, building a better world together on Florida’s coast.
     </p>
 
-    <p class="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
+    <p class="mt-6 max-w-xl text-lead text-white/75">
       We are part of a worldwide community in more than 100,000 places, working with our neighbors
       to translate the ideal of human oneness into acts of worship, friendship and service.
     </p>
 
-    <div class="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-      <a
-        href="#faith"
-        class="btn btn-lg border-2 border-white bg-transparent px-8 text-white hover:border-white hover:bg-white hover:text-primary"
-      >
-        Explore the Faith
-      </a>
+    <div class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+      <a href="#faith" class="btn btn-primary btn-lg px-9">Explore the Faith</a>
       <a
         href="#connect"
-        class="btn btn-lg border-2 border-white/70 bg-white/10 px-8 text-white backdrop-blur-sm hover:border-white hover:bg-white hover:text-primary"
+        class="group inline-flex items-center gap-2 px-2 py-2 text-sm font-semibold uppercase tracking-[0.14em] text-white focus-ring"
       >
-        Join a gathering
+        <span class="border-b-2 border-accent pb-1">Join a gathering</span>
+        <svg
+          class="size-4 transition-transform duration-300 group-hover:translate-x-1"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 12h15m0 0-5.5-5.5M19 12l-5.5 5.5" />
+        </svg>
       </a>
     </div>
 
-    <p class="mt-10 text-xs uppercase tracking-[0.2em] text-white/75">
+    <p class="mt-14 text-xs uppercase tracking-[0.2em] text-white/60">
       Daytona Beach · Deltona · DeLand · Port Orange · Ormond Beach
     </p>
   </div>
 </section>
 
 <!-- ============================ WELCOME ============================ -->
-<section id="welcome" class="bg-base-100 py-24 sm:py-28">
-  <div class="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
-    <div class="reveal">
-      <h2 class="mt-4 font-display text-4xl font-semibold text-base-content sm:text-5xl">
-        There is a place for you here.
-      </h2>
-      <div class="mt-6 space-y-5 text-lg leading-relaxed text-base-content/75">
+<section id="welcome" class="band-light py-24 sm:py-32">
+  <div class="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-12 lg:items-center lg:px-8">
+    <div class="reveal lg:col-span-5">
+      <p class="eyebrow text-primary">Welcome</p>
+      <h2 class="mt-5 font-display text-headline font-semibold">There is a place for you here.</h2>
+      <div class="mt-7 space-y-5 text-lead text-base-content/75">
         <p>
           Across Volusia County, people of every background, belief and walk of life are coming
           together in homes, parks and community spaces to learn, to worship, and to serve — and to
@@ -61,117 +95,120 @@
           life of our community.
         </p>
       </div>
-      <a href="#community" class="btn btn-primary btn-outline mt-8 px-7">See how we gather</a>
+      <a href="#community" class="btn btn-primary btn-outline mt-9 px-7">See how we gather</a>
     </div>
 
-    <!-- quote medallion -->
-    <figure class="reveal relative">
-      <div class="quote-card relative overflow-hidden p-9 text-primary-content shadow-xl sm:p-12">
+    <!-- Quote block — breaks the container gutter on wide viewports. -->
+    <figure class="reveal lg:col-span-7 lg:-mr-8 xl:-mr-16">
+      <div class="quote-card relative overflow-hidden p-10 text-primary-content sm:p-16">
         <app-star
           variant="outline"
-          class="pointer-events-none absolute -right-8 -top-8 size-40 text-white/10"
+          class="pointer-events-none absolute -right-10 -top-10 size-56 text-white/10"
         />
-        <blockquote
-          class="relative font-display text-3xl font-medium italic leading-snug sm:text-4xl"
-        >
+        <blockquote class="relative font-display text-headline font-medium italic">
           “Ye are all the leaves of one tree and the drops of one ocean.”
         </blockquote>
-        <figcaption
-          class="relative mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-accent"
-        >
-          — Bahá’u’lláh
-        </figcaption>
+        <figcaption class="relative mt-8 eyebrow text-accent">— Bahá’u’lláh</figcaption>
       </div>
     </figure>
   </div>
 </section>
 
 <!-- ============================ THE FAITH ============================ -->
-<section id="faith" class="section-soft py-24 sm:py-28">
+<section id="faith" class="band-dark py-24 sm:py-32">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="reveal mx-auto max-w-3xl text-center">
-      <p class="rule-heading eyebrow text-primary">The Bahá’í Faith</p>
-      <h2 class="mt-5 font-display text-4xl font-semibold text-base-content sm:text-5xl">
-        A faith built on <span class="italic text-primary">oneness</span>.
+      <p class="rule-heading eyebrow text-accent">The Bahá’í Faith</p>
+      <h2 class="mt-6 font-display text-headline font-semibold">
+        A faith built on <span class="italic text-accent">oneness</span>.
       </h2>
-      <p class="mt-6 text-lg leading-relaxed text-base-content/75">
+      <p class="mt-7 text-lead text-neutral-content/75">
         The Bahá’í Faith is among the youngest of the world’s independent religions. Founded by
-        <strong class="font-semibold text-base-content">Bahá’u’lláh</strong> (1817–1892), its
+        <strong class="font-semibold text-neutral-content">Bahá’u’lláh</strong> (1817–1892), its
         central theme is the oneness of humanity — that the earth is but one country, and its
         peoples one family, called to build a peaceful and ever-advancing global civilization.
       </p>
     </div>
 
-    <!-- progressive revelation -->
-    <div class="reveal mt-14 border-y border-base-300 bg-base-100 px-6 py-12 text-center">
-      <p
-        class="mx-auto mt-4 max-w-3xl font-display text-2xl italic leading-relaxed text-base-content/85 sm:text-3xl"
-      >
+    <!-- Progressive revelation -->
+    <div class="reveal mt-16 border-y border-neutral-content/15 px-2 py-14 text-center sm:px-6">
+      <p class="mx-auto max-w-3xl font-display text-subhead italic text-neutral-content/90">
         Throughout history, God has sent a succession of divine Educators — the Manifestations of
         God — whose teachings are successive chapters of one unfolding religion.
       </p>
       <ul
-        class="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-x-1 gap-y-3 text-sm uppercase tracking-[0.12em] text-base-content/65"
+        class="mx-auto mt-10 flex max-w-4xl flex-wrap items-center justify-center gap-x-1 gap-y-3 text-sm uppercase tracking-[0.12em] text-neutral-content/60"
       >
         @for (m of manifestations; track m; let last = $last) {
           <li class="flex items-center gap-1">
-            <span class="px-2" [class.font-bold]="last" [class.text-primary]="last">{{ m }}</span>
+            <span class="px-2" [class.font-bold]="last" [class.text-accent]="last">{{ m }}</span>
             @if (!last) {
-              <app-star class="size-2.5 text-accent" />
+              <app-star class="size-2.5 text-accent/70" />
             }
           </li>
         }
       </ul>
     </div>
-
-
   </div>
 </section>
 
 <!-- ============================ COMMUNITY LIFE ============================ -->
-<section id="community" class="bg-base-100 py-24 sm:py-28">
+<section id="community" class="band-light py-24 sm:py-32">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="reveal mx-auto max-w-2xl text-center">
       <p class="rule-heading eyebrow text-primary">Community Life</p>
-      <h2 class="mt-5 font-display text-4xl font-semibold text-base-content sm:text-5xl">
-        Four ways we grow together.
-      </h2>
-      <p class="mt-5 text-lg leading-relaxed text-base-content/75">
+      <h2 class="mt-6 font-display text-headline font-semibold">Four ways we grow together.</h2>
+      <p class="mt-6 text-lead text-base-content/75">
         The Bahá’í community is a global community built on local connections. Its life centers on a
         few simple activities — held in homes and community spaces, and open to people of every age
         and background.
       </p>
     </div>
 
-    <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      @for (a of activities; track a.title) {
+    <div class="activity-grid mt-16 grid gap-px bg-base-300 sm:grid-cols-2 lg:grid-cols-4">
+      @for (a of activities; track a.title; let i = $index) {
         <article
-          class="reveal flex flex-col border border-base-300 bg-base-100 p-7 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-xl"
+          class="group reveal flex flex-col bg-base-100 p-8 transition-colors duration-300 hover:bg-primary hover:text-primary-content"
         >
-          <div class="flex size-12 items-center justify-center bg-primary/10 text-primary">
-            <svg
-              class="size-6"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.6"
+          <div class="flex items-center justify-between">
+            <div
+              class="flex size-12 items-center justify-center bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary-content/15 group-hover:text-primary-content"
+            >
+              <svg
+                class="size-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="a.icon" />
+              </svg>
+            </div>
+            <span
+              class="font-display text-4xl font-semibold text-base-content/15 transition-colors duration-300 group-hover:text-primary-content/40"
               aria-hidden="true"
             >
-              <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="a.icon" />
-            </svg>
+              0{{ i + 1 }}
+            </span>
           </div>
+
           <span
-            class="mt-5 inline-block w-fit bg-accent/25 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-accent-content"
+            class="mt-6 inline-block w-fit bg-accent/25 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-accent-content transition-colors duration-300 group-hover:bg-primary-content/20 group-hover:text-primary-content"
           >
             {{ a.audience }}
           </span>
-          <h3 class="mt-3 font-display text-xl font-semibold text-base-content">{{ a.title }}</h3>
-          <p class="mt-2 text-sm leading-relaxed text-base-content/70">{{ a.body }}</p>
+          <h3 class="mt-4 font-display text-2xl font-semibold">{{ a.title }}</h3>
+          <p
+            class="mt-3 text-sm leading-relaxed text-base-content/70 transition-colors duration-300 group-hover:text-primary-content/80"
+          >
+            {{ a.body }}
+          </p>
         </article>
       }
     </div>
 
-    <p class="mx-auto mt-12 max-w-xl text-center text-base-content/60">
+    <p class="mx-auto mt-14 max-w-xl text-center text-base-content/60">
       Curious about any of these?
       <a href="#connect" class="link font-medium text-primary underline-offset-4">Reach out</a> —
       we’d be delighted to welcome you.
@@ -180,24 +217,22 @@
 </section>
 
 <!-- ============================ CONNECT ============================ -->
-<section id="connect" class="bg-base-100 py-24 sm:py-28">
+<section id="connect" class="band-dark py-24 sm:py-32">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
-      <!-- invitation + contact details -->
-      <div class="reveal">
-        <p class="eyebrow text-primary">Connect</p>
-        <h2 class="mt-4 font-display text-4xl font-semibold text-base-content sm:text-5xl">
-          We’d love to hear from you.
-        </h2>
-        <p class="mt-6 text-lg leading-relaxed text-base-content/75">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <!-- Invitation + contact details -->
+      <div class="reveal lg:col-span-6">
+        <p class="eyebrow text-accent">Connect</p>
+        <h2 class="mt-5 font-display text-headline font-semibold">We’d love to hear from you.</h2>
+        <p class="mt-7 text-lead text-neutral-content/75">
           Whether you have a question about the Bahá’í Faith, want to attend a devotional gathering,
           or are simply curious — send a note or reach out directly. There’s no obligation, ever.
           Everyone is welcome.
         </p>
 
-        <dl class="mt-10 space-y-5">
-          <div class="flex items-start gap-4">
-            <span class="flex size-11 items-center justify-center bg-primary/10 text-primary">
+        <dl class="mt-12 space-y-6">
+          <div class="flex items-start gap-5">
+            <span class="flex size-12 shrink-0 items-center justify-center bg-accent/15 text-accent">
               <svg
                 class="size-5"
                 viewBox="0 0 24 24"
@@ -214,23 +249,21 @@
               </svg>
             </span>
             <div>
-              <dt class="text-sm font-semibold uppercase tracking-wide text-base-content/50">
-                By phone
-              </dt>
-              <dd class="mt-0.5">
+              <dt class="eyebrow text-neutral-content/45">By phone</dt>
+              <dd class="mt-1.5">
                 <a
-                  class="text-lg font-medium text-base-content hover:text-primary"
+                  class="text-lg font-medium text-neutral-content transition hover:text-accent focus-ring"
                   href="tel:1-800-228-6483"
                 >
                   1-800-22-UNITE
                 </a>
-                <span class="text-base-content/50"> (1-800-228-6483)</span>
+                <span class="text-neutral-content/50"> (1-800-228-6483)</span>
               </dd>
             </div>
           </div>
 
-          <div class="flex items-start gap-4">
-            <span class="flex size-11 items-center justify-center bg-primary/10 text-primary">
+          <div class="flex items-start gap-5">
+            <span class="flex size-12 shrink-0 items-center justify-center bg-accent/15 text-accent">
               <svg
                 class="size-5"
                 viewBox="0 0 24 24"
@@ -247,12 +280,10 @@
               </svg>
             </span>
             <div>
-              <dt class="text-sm font-semibold uppercase tracking-wide text-base-content/50">
-                By email
-              </dt>
-              <dd class="mt-0.5">
+              <dt class="eyebrow text-neutral-content/45">By email</dt>
+              <dd class="mt-1.5">
                 <a
-                  class="text-lg font-medium text-base-content hover:text-primary"
+                  class="text-lg font-medium text-neutral-content transition hover:text-accent focus-ring"
                   href="mailto:hello@volusiabahais.org"
                 >
                   hello&#64;volusiabahais.org
@@ -261,8 +292,8 @@
             </div>
           </div>
 
-          <div class="flex items-start gap-4">
-            <span class="flex size-11 items-center justify-center bg-primary/10 text-primary">
+          <div class="flex items-start gap-5">
+            <span class="flex size-12 shrink-0 items-center justify-center bg-accent/15 text-accent">
               <svg
                 class="size-5"
                 viewBox="0 0 24 24"
@@ -284,12 +315,10 @@
               </svg>
             </span>
             <div>
-              <dt class="text-sm font-semibold uppercase tracking-wide text-base-content/50">
-                Online
-              </dt>
-              <dd class="mt-0.5">
+              <dt class="eyebrow text-neutral-content/45">Online</dt>
+              <dd class="mt-1.5">
                 <a
-                  class="text-lg font-medium text-base-content hover:text-primary"
+                  class="text-lg font-medium text-neutral-content transition hover:text-accent focus-ring"
                   href="https://find.bahai.us"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -302,15 +331,17 @@
         </dl>
       </div>
 
-      <!-- message form -->
-      <div class="reveal border border-base-300 bg-base-200/50 p-7 shadow-sm sm:p-9">
-        <h3 class="font-display text-2xl font-semibold text-base-content">Send us a message</h3>
+      <!-- Message form — a light card punched into the dark band. -->
+      <div
+        class="reveal border border-base-300 bg-base-100 p-8 text-base-content shadow-2xl sm:p-10 lg:col-span-6"
+      >
+        <h3 class="font-display text-3xl font-semibold">Send us a message</h3>
         <p class="mt-2 text-sm text-base-content/60">
           This opens your email app with the note ready to send.
         </p>
 
         <form
-          class="mt-6 space-y-5"
+          class="mt-8 space-y-5"
           (submit)="sendMessage($event, nameEl.value, emailEl.value, msgEl.value)"
         >
           <div>
@@ -353,13 +384,13 @@
               id="message"
               name="message"
               required
-              rows="4"
+              rows="5"
               placeholder="I’d love to learn more about…"
               class="textarea w-full"
             ></textarea>
           </div>
 
-          <button type="submit" class="btn btn-primary w-full">Send message</button>
+          <button type="submit" class="btn btn-primary btn-lg w-full">Send message</button>
         </form>
       </div>
     </div>

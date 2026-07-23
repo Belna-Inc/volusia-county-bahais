@@ -6,9 +6,10 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Bahá'ís of Volusia County — visual identity matched to bahai.us: square
-   edges, a signature red primary with a greenish-blue (teal) secondary and
-   warm-gold accents on a soft cream canvas, classical serif headings.
+   Bahá'ís of Volusia County — a bold, high-contrast reading of the bahai.us
+   identity: square edges, the signature red, warm-gold accents, and classical
+   serif display type set large. Light bands are a warm cream; dark bands are a
+   near-black warm brown, and the page alternates between them.
 --------------------------------------------------------------------------- */
 @plugin "daisyui/theme" {
   name: 'bahai';
@@ -16,11 +17,11 @@
   prefersdark: false;
   color-scheme: light;
 
-  /* Warm cream canvas + warm charcoal ink */
+  /* Warm cream canvas + near-black warm ink */
   --color-base-100: oklch(97.5% 0.012 85);
   --color-base-200: oklch(95% 0.016 82);
   --color-base-300: oklch(89% 0.022 80);
-  --color-base-content: oklch(27% 0.02 60);
+  --color-base-content: oklch(22% 0.02 60);
 
   /* Signature red ≈ #ac1a1c — the dominant hue, matching bahai.us */
   --color-primary: oklch(48% 0.18 27);
@@ -34,8 +35,8 @@
   --color-accent: oklch(74% 0.105 78);
   --color-accent-content: oklch(30% 0.05 60); /* dark brown ≈ #402712 */
 
-  /* Deep warm brown ≈ #352119 — footer & dark bands */
-  --color-neutral: oklch(27% 0.035 40);
+  /* Near-black warm brown — the dark bands and the footer */
+  --color-neutral: oklch(19% 0.028 40);
   --color-neutral-content: oklch(95% 0.018 85); /* cream ≈ #f4eee1 */
 
   --color-info: oklch(55% 0.09 230); /* blue ≈ #2e7b9c */
@@ -58,12 +59,148 @@
   --noise: 0;
 }
 
-/* Typefaces: a classical high-contrast serif for display, clean sans for UI,
-   and a flowing script reserved for the hero signature. */
+/* Dark counterpart. The light theme's dark bands already establish the near-
+   black warm palette, so this is largely an inversion: the canvas takes the
+   band colour, and gold — which carries the dark bands in the light theme —
+   becomes the dominant highlight. Red is lifted for contrast against black. */
+@plugin "daisyui/theme" {
+  name: 'bahai-dark';
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+
+  /* Kept a clear step above --color-neutral below, so the page's alternating
+     light/dark bands still read as bands once the palette is inverted. */
+  --color-base-100: oklch(18% 0.016 40);
+  --color-base-200: oklch(22% 0.018 40);
+  --color-base-300: oklch(29% 0.02 40);
+  --color-base-content: oklch(93% 0.015 85);
+
+  --color-primary: oklch(58% 0.17 27);
+  --color-primary-content: oklch(98% 0.01 85);
+
+  --color-secondary: oklch(66% 0.09 205);
+  --color-secondary-content: oklch(16% 0.02 205);
+
+  --color-accent: oklch(78% 0.11 78);
+  --color-accent-content: oklch(20% 0.035 60);
+
+  /* Darker than base-100 so dark bands still separate from the page. */
+  --color-neutral: oklch(11% 0.012 40);
+  --color-neutral-content: oklch(94% 0.016 85);
+
+  --color-info: oklch(68% 0.09 230);
+  --color-info-content: oklch(15% 0.02 230);
+  --color-success: oklch(72% 0.12 70);
+  --color-success-content: oklch(16% 0.03 60);
+  --color-warning: oklch(80% 0.11 80);
+  --color-warning-content: oklch(18% 0.03 60);
+  --color-error: oklch(62% 0.17 27);
+  --color-error-content: oklch(15% 0.02 27);
+
+  --radius-selector: 0;
+  --radius-field: 0;
+  --radius-box: 0;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Self-hosted variable typefaces — bundled through the build, so there is no
+   render-blocking round trip to a third-party CDN, no font flash, and no
+   request to Google from anyone who visits the site.
+
+   Declared by hand rather than importing the packages' index.css because those
+   pull in Cyrillic, Greek and Vietnamese subsets we have no content for. Latin
+   plus Latin Extended covers everything on the page, including the transliter-
+   ation diacritics in "Bahá'u'lláh" and "Muḥammad" (U+1E25, in latin-ext).
+--------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/inter/files/inter-latin-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 700;
+  src: url('@fontsource-variable/cormorant-garamond/files/cormorant-garamond-latin-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 700;
+  src: url('@fontsource-variable/cormorant-garamond/files/cormorant-garamond-latin-ext-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+/* Italic — used heavily for the pull quotes and display emphasis. Only the
+   serif needs a true italic; Inter is never set italic on this page. */
+@font-face {
+  font-family: 'Cormorant Garamond Variable';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 300 700;
+  src: url('@fontsource-variable/cormorant-garamond/files/cormorant-garamond-latin-wght-italic.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond Variable';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 300 700;
+  src: url('@fontsource-variable/cormorant-garamond/files/cormorant-garamond-latin-ext-wght-italic.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+/* Typefaces: a classical high-contrast serif for display, clean sans for UI.
+   Cormorant Garamond is drawn to be set large — the display scale below is
+   what lets its character actually show. */
 @theme {
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-serif: 'Cormorant Garamond', ui-serif, Georgia, 'Times New Roman', serif;
-  --font-script: 'Dancing Script', 'Cormorant Garamond', ui-serif, cursive;
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: 'Cormorant Garamond Variable', ui-serif, Georgia, 'Times New Roman', serif;
 }
 
 @layer base {
@@ -84,15 +221,36 @@
 }
 
 @layer utilities {
+  /* ---- Type -------------------------------------------------------------
+     Fluid sizes so display type scales continuously rather than snapping at
+     breakpoints. Negative tracking at the top of the scale is what makes large
+     serif type read as deliberate rather than accidentally enlarged. */
+  .text-display {
+    font-size: clamp(3.5rem, 11vw, 9rem);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+  }
+
+  .text-headline {
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+  }
+
+  .text-subhead {
+    font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+    line-height: 1.2;
+  }
+
+  .text-lead {
+    font-size: clamp(1.0625rem, 1.15vw, 1.25rem);
+    line-height: 1.65;
+  }
+
   /* Classical display serif. */
   .font-display {
     font-family: var(--font-serif);
     letter-spacing: 0;
-  }
-
-  /* Flowing script — hero signature only. */
-  .font-script {
-    font-family: var(--font-script);
   }
 
   /* Section eyebrow label. */
@@ -103,19 +261,60 @@
     font-size: 0.8rem;
   }
 
+  /* ---- Bands ------------------------------------------------------------
+     The page alternates light and dark full-bleed bands. Declaring the pair
+     once keeps the rhythm consistent and makes it survive a theme switch. */
+  .band-dark {
+    background-color: var(--color-neutral);
+    color: var(--color-neutral-content);
+  }
+
+  .band-light {
+    background-color: var(--color-base-100);
+    color: var(--color-base-content);
+  }
+
+  /* Focus ring that stays visible on both light and dark bands. */
+  .focus-ring {
+    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+
   /* Footer navigation link — muted on the dark band, gold on hover/focus. */
   .footer-link {
     @apply text-neutral-content/85 transition hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
   }
 
-  /* Primary navbar link (desktop). */
+  /* Primary navbar link (desktop). The gold underline is the scroll-spy
+     indicator; it grows from the left on hover and on [data-active]. */
   .nav-link {
-    @apply px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-base-content/70 transition hover:bg-base-200 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+    @apply relative px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-base-content/70 transition hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0.875rem;
+    bottom: 0.125rem;
+    height: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  .nav-link:hover::after,
+  .nav-link[data-active]::after {
+    transform: scaleX(1);
+  }
+  .nav-link[data-active] {
+    color: var(--color-primary);
   }
 
   /* Primary navbar link, stacked variant shown in the mobile drawer. */
   .nav-link-mobile {
-    @apply block px-3 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-base-content/80 transition hover:bg-base-200 hover:text-primary;
+    @apply block border-l-2 border-transparent px-3 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-base-content/80 transition hover:bg-base-200 hover:text-primary;
+  }
+  .nav-link-mobile[data-active] {
+    border-color: var(--color-accent);
+    color: var(--color-primary);
   }
 
   /* Centered label flanked by thin gold rules — bahai.us section style. */
@@ -135,6 +334,25 @@
     background: color-mix(in oklch, var(--color-accent) 75%, transparent);
   }
 
+  /* Left-aligned variant for the hero and other edge-anchored headings. */
+  .rule-heading-start {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 1.1rem;
+  }
+  .rule-heading-start::after {
+    content: '';
+    height: 1px;
+    width: clamp(1.75rem, 7vw, 4.5rem);
+    background: color-mix(in oklch, var(--color-accent) 75%, transparent);
+  }
+
+  /* ---- Motion -----------------------------------------------------------
+     Scroll-driven, so there is no scroll listener and nothing to run on the
+     main thread. Where `animation-timeline` is unsupported the animation has
+     no duration, so `both` lands it on its end state immediately. */
+
   /* Gentle entrance used by sections as they enter the viewport. */
   .reveal {
     opacity: 0;
@@ -148,6 +366,13 @@
   .animate-float {
     animation: float 9s ease-in-out infinite;
   }
+
+  /* Hero photograph drifts slower than the page as it scrolls away. */
+  .parallax {
+    animation: parallax-drift both linear;
+    animation-timeline: scroll();
+    animation-range: 0 100vh;
+  }
 }
 
 /* Button shape & feel matched to bahai.us: square, uppercase, letter-spaced.
@@ -157,6 +382,36 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
+}
+
+/* Navbar condenses as the page scrolls — pure CSS, driven by the document
+   scroll timeline, so no scroll listener and nothing on the main thread. The
+   shell fades to a translucent blur; the inner row loses height. */
+.nav-shell {
+  backdrop-filter: blur(12px);
+  animation: nav-settle both linear;
+  animation-timeline: scroll();
+  animation-range: 0 8rem;
+}
+
+.nav-inner {
+  height: 4rem;
+  animation: nav-condense both linear;
+  animation-timeline: scroll();
+  animation-range: 0 8rem;
+}
+
+@keyframes nav-settle {
+  to {
+    background-color: color-mix(in oklch, var(--color-base-100) 82%, transparent);
+    box-shadow: 0 8px 24px -12px color-mix(in oklch, var(--color-base-content) 45%, transparent);
+  }
+}
+
+@keyframes nav-condense {
+  to {
+    height: 3.25rem;
+  }
 }
 
 @keyframes reveal-in {
@@ -176,6 +431,32 @@
   }
 }
 
+@keyframes parallax-drift {
+  to {
+    transform: translateY(12%) scale(1.08);
+  }
+}
+
+/* Mobile menu enter/leave — paired with Angular's animate.enter / animate.leave
+   so the drawer animates out as well as in. */
+.menu-enter {
+  animation: menu-in 0.22s ease-out both;
+}
+.menu-leave {
+  animation: menu-in 0.16s ease-in reverse both;
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Respect users who prefer reduced motion. */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -186,7 +467,15 @@
     transform: none;
     animation: none;
   }
-  .animate-float {
+  .animate-float,
+  .parallax,
+  .nav-shell,
+  .nav-inner,
+  .menu-enter,
+  .menu-leave {
     animation: none;
+  }
+  .nav-link::after {
+    transition: none;
   }
 }

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="bahai">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Bahá’ís of Volusia County — One human family on Florida’s coast</title>
@@ -9,8 +9,26 @@
     />
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#1f4031" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbf6ec" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17110e" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <!-- Resolve the colour scheme before first paint. The site is prerendered to
+         static HTML, so without this every visitor would see a flash of the
+         light theme before hydration could apply their preference. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var dark = stored
+            ? stored === 'dark'
+            : matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'bahai-dark' : 'bahai';
+        } catch (e) {
+          document.documentElement.dataset.theme = 'bahai';
+        }
+      })();
+    </script>
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -20,13 +38,8 @@
       content="One human family on Florida’s coast. Devotional gatherings, study circles, children’s classes and junior youth groups — open to all."
     />
 
-    <!-- Typefaces: Cormorant Garamond (display serif), Inter (UI sans), Dancing Script (hero) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Dancing+Script:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Typefaces (Cormorant Garamond + Inter) are self-hosted and bundled via
+         src/styles.css — no third-party font request. -->
   </head>
   <body>
     <app-root></app-root>

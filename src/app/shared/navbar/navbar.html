@@ -1,5 +1,5 @@
 <nav
-  class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
+  class="nav-inner mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
   aria-label="Primary"
 >
   <!-- Brand -->
@@ -33,15 +33,63 @@
   <ul class="hidden items-center gap-1 lg:flex">
     @for (link of links; track link.fragment) {
       <li>
-        <a [href]="'#' + link.fragment" class="nav-link">
+        <a
+          [href]="'#' + link.fragment"
+          class="nav-link"
+          [attr.data-active]="activeFragment() === link.fragment ? '' : null"
+          [attr.aria-current]="activeFragment() === link.fragment ? 'true' : null"
+        >
           {{ link.label }}
         </a>
       </li>
     }
   </ul>
 
-  <div class="flex items-center gap-2">
-    <a href="#connect" class="btn btn-outline btn-primary btn-sm hidden sm:inline-flex">Connect</a>
+  <div class="flex items-center gap-1 sm:gap-2">
+    <!-- Colour scheme toggle -->
+    <button
+      type="button"
+      class="btn btn-ghost btn-square btn-sm focus-ring"
+      [attr.aria-pressed]="theme.mode() === 'dark'"
+      [attr.aria-label]="
+        theme.mode() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
+      "
+      (click)="theme.toggle()"
+    >
+      @if (theme.mode() === 'dark') {
+        <svg
+          class="size-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4.25" />
+          <path
+            stroke-linecap="round"
+            d="M12 2.75v2M12 19.25v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2.75 12h2M19.25 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+          />
+        </svg>
+      } @else {
+        <svg
+          class="size-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z"
+          />
+        </svg>
+      }
+    </button>
+
+    <a href="#connect" class="btn btn-primary btn-sm hidden sm:inline-flex">Connect</a>
 
     <!-- Mobile toggle -->
     <button
@@ -81,11 +129,21 @@
 
 <!-- Mobile menu -->
 @if (menuOpen()) {
-  <div id="mobile-menu" class="border-t border-base-300 bg-base-100 lg:hidden">
+  <div
+    id="mobile-menu"
+    class="border-t border-base-300 bg-base-100 lg:hidden"
+    animate.enter="menu-enter"
+    animate.leave="menu-leave"
+  >
     <ul class="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6">
       @for (link of links; track link.fragment) {
         <li>
-          <a [href]="'#' + link.fragment" class="nav-link-mobile" (click)="close()">
+          <a
+            [href]="'#' + link.fragment"
+            class="nav-link-mobile"
+            [attr.data-active]="activeFragment() === link.fragment ? '' : null"
+            (click)="close()"
+          >
             {{ link.label }}
           </a>
         </li>

@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "images": "node scripts/optimize-images.mjs",
     "format": "prettier --write \"src/**/*.{ts,html,css}\"",
     "format:check": "prettier --check \"src/**/*.{ts,html,css}\""
   },
@@ -28,12 +29,15 @@
     "@angular/build": "^22.0.0",
     "@angular/cli": "^22.0.0",
     "@angular/compiler-cli": "^22.0.0",
+    "@fontsource-variable/cormorant-garamond": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0",
     "@tailwindcss/postcss": "^4.3.0",
     "@types/node": "^20.17.19",
     "daisyui": "^5.5.23",
     "jsdom": "^28.0.0",
     "postcss": "^8.5.15",
     "prettier": "^3.8.1",
+    "sharp": "^0.35.3",
     "tailwindcss": "^4.3.0",
     "typescript": "~6.0.2",
     "vitest": "^4.0.8"
