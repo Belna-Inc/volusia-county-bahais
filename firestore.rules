@@ -1,0 +1,21 @@
+rules_version = '2';
+
+// The site is a static, unauthenticated public page: anyone may read the
+// calendar, and nobody may write to it from a browser. Edits are made from the
+// Firebase console (or the Admin SDK), both of which bypass these rules.
+//
+// Deploy with:  firebase deploy --only firestore:rules
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Anything not named above is closed by default.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

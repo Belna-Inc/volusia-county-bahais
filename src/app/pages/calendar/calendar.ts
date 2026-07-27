@@ -4,22 +4,13 @@ import {
   ElementRef,
   afterNextRender,
   computed,
+  inject,
   signal,
   viewChild,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CommunityEvent, Events } from '../../shared/events/events';
 import { Star } from '../../shared/star/star';
-
-export interface CommunityEvent {
-  /** ISO `yyyy-mm-dd`. Stored as a string so no timezone shifts the day. */
-  readonly date: string;
-  readonly title: string;
-  readonly time: string;
-  readonly location: string;
-  readonly description: string;
-  /** Which of the four community activities this belongs to. */
-  readonly kind: 'devotional' | 'study' | 'children' | 'junior-youth' | 'other';
-}
 
 /** A single cell in the month grid. */
 interface DayCell {
@@ -70,62 +61,76 @@ function isoKey(year: number, month: number, day: number): string {
   styleUrl: './calendar.css',
 })
 export class Calendar {
-  /**
-   * Community gatherings.
-   *
-   * TODO: these are PLACEHOLDER entries seeded to demonstrate the calendar.
-   * Replace them with the real schedule before the page goes live.
-   */
-  protected readonly events: readonly CommunityEvent[] = [
-    {
-      date: '2026-07-29',
-      title: 'Devotional Gathering (test event)',
-      time: '7:00 – 8:30 PM',
-      location: 'Daytona Beach',
-      description:
-        'A placeholder entry used to check the calendar rendering. Neighbors of every background gather to pray and share sacred writings from the world’s great religions.',
-      kind: 'devotional',
-    },
-  ];
+  private readonly store = inject(Events);
 
-  /** Events indexed by ISO date, so a cell lookup is O(1). */
-  private readonly byDate = computed(() => {
-    const map = new Map<string, CommunityEvent[]>();
-    for (const event of this.events) {
-      const bucket = map.get(event.date);
-      if (bucket) bucket.push(event);
-      else map.set(event.date, [event]);
-    }
-    return map;
-  });
+  /** Community gatherings, loaded from Firestore after hydration. */
+  private readonly events = this.store.events;
+
+  protected readonly status = this.store.status;
 
   /**
-   * The month on screen, as `[year, monthIndex]`.
+   * False until the browser has taken over.
    *
-   * Seeded from the earliest event rather than from "today" on purpose: the
-   * page is prerendered at build time, so anything derived from the clock would
-   * differ between the server-rendered HTML and the browser, and the grid could
-   * change shape underneath hydration. After hydration `jumpToCurrentMonth()`
-   * moves the view forward if the real date has passed this month.
+   * The page is prerendered at build time, so anything derived from the clock
+   * would differ between the server-rendered HTML and the browser, and the grid
+   * could change shape underneath hydration. The template therefore renders a
+   * skeleton until this flips, and only then is a real month drawn — which is
+   * also when the events themselves arrive.
    */
-  private readonly view = signal(this.earliestEventMonth());
+  protected readonly ready = signal(false);
+
+  /**
+   * The month on screen, as `[year, monthIndex]`. The placeholder is never
+   * displayed; `ready` gates the grid until the real month is set below.
+   */
+  private readonly view = signal<[number, number]>([2026, 0]);
 
   /** Today, resolved in the browser only — drives the "today" ring. */
   private readonly today = signal<string | null>(null);
+
+  /** Set once the visitor uses the arrows, so we stop moving the view for them. */
+  private steered = false;
 
   constructor() {
     afterNextRender(() => {
       const now = new Date();
       this.today.set(isoKey(now.getFullYear(), now.getMonth(), now.getDate()));
-      this.jumpToCurrentMonth(now);
+      this.view.set([now.getFullYear(), now.getMonth()]);
+      this.ready.set(true);
+      void this.store.load().then(() => this.jumpToFirstUpcoming());
     });
   }
 
   protected readonly weekdays = WEEKDAYS;
 
+  /** Six weeks of blank cells, so the skeleton grid is the tallest a month gets. */
+  protected readonly skeletonCells = Array.from({ length: 42 });
+
+  /** True while the schedule is still on its way — including before hydration. */
+  protected readonly loading = computed(
+    () => !this.ready() || this.status() === 'idle' || this.status() === 'loading',
+  );
+
+  protected readonly headline = computed(() => {
+    if (this.status() === 'error') return 'The calendar didn’t load';
+    if (this.loading()) return 'Loading gatherings';
+    return this.monthEvents().length ? 'What’s coming up' : 'Nothing scheduled yet';
+  });
+
   protected readonly monthLabel = computed(() => {
     const [year, month] = this.view();
     return `${MONTH_NAMES[month]} ${year}`;
+  });
+
+  /** Events indexed by ISO date, so a cell lookup is O(1). */
+  private readonly byDate = computed(() => {
+    const map = new Map<string, CommunityEvent[]>();
+    for (const event of this.events()) {
+      const bucket = map.get(event.date);
+      if (bucket) bucket.push(event);
+      else map.set(event.date, [event]);
+    }
+    return map;
   });
 
   /** The month grid, as whole weeks of seven days. */
@@ -163,10 +168,8 @@ export class Calendar {
   protected readonly monthEvents = computed(() => {
     const [year, month] = this.view();
     const prefix = `${year}-${String(month + 1).padStart(2, '0')}`;
-    // `filter` already returns a fresh array, so sorting it in place is safe.
-    return this.events
-      .filter((event) => event.date.startsWith(prefix))
-      .sort((a, b) => a.date.localeCompare(b.date));
+    // Firestore already returns them sorted by date, so filtering preserves it.
+    return this.events().filter((event) => event.date.startsWith(prefix));
   });
 
   private readonly dialog = viewChild<ElementRef<HTMLDialogElement>>('eventDialog');
@@ -213,10 +216,12 @@ export class Calendar {
   }
 
   protected previousMonth(): void {
+    this.steered = true;
     this.view.update(([year, month]) => (month === 0 ? [year - 1, 11] : [year, month - 1]));
   }
 
   protected nextMonth(): void {
+    this.steered = true;
     this.view.update(([year, month]) => (month === 11 ? [year + 1, 0] : [year, month + 1]));
   }
 
@@ -227,19 +232,25 @@ export class Calendar {
     return `${WEEKDAYS[date.getDay()]} ${day} ${MONTH_NAMES[month - 1].slice(0, 3)}`;
   }
 
-  /** The month of the earliest event, or a fixed fallback when there are none. */
-  private earliestEventMonth(): [number, number] {
-    if (!this.events.length) return [2026, 0];
-    const earliest = this.events.reduce((a, b) => (a.date <= b.date ? a : b));
-    const [year, month] = earliest.date.split('-').map(Number);
-    return [year, month - 1];
+  protected retry(): void {
+    void this.store.refresh().then(() => this.jumpToFirstUpcoming());
   }
 
-  /** Move the view to the real current month, if that is later than the seed. */
-  private jumpToCurrentMonth(now: Date): void {
-    const [year, month] = this.view();
-    const current: [number, number] = [now.getFullYear(), now.getMonth()];
-    const isLater = current[0] > year || (current[0] === year && current[1] > month);
-    if (isLater) this.view.set(current);
+  /**
+   * If nothing is on this month, open on the next month that has something.
+   *
+   * Landing on an empty grid reads as "there is nothing going on" when the real
+   * answer is "not until next month". Skipped once the visitor has used the
+   * arrows, so the view never moves out from under them.
+   */
+  private jumpToFirstUpcoming(): void {
+    if (this.steered || this.monthEvents().length) return;
+
+    const today = this.today();
+    const next = this.events().find((event) => !today || event.date >= today);
+    if (!next) return;
+
+    const [year, month] = next.date.split('-').map(Number);
+    this.view.set([year, month - 1]);
   }
 }

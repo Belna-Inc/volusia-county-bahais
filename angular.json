@@ -30,6 +30,10 @@
             ],
             "server": "src/main.server.ts",
             "outputMode": "static",
+            "allowedCommonJsDependencies": [
+              "@grpc/grpc-js",
+              "@grpc/proto-loader"
+            ],
             "security": {
               "allowedHosts": []
             }
