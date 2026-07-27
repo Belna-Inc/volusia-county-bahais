@@ -112,9 +112,9 @@ export class Calendar {
   );
 
   protected readonly headline = computed(() => {
-    if (this.status() === 'error') return 'The calendar didn’t load';
+    if (this.status() === 'error') return 'The calendar didn\'t load';
     if (this.loading()) return 'Loading gatherings';
-    return this.monthEvents().length ? 'What’s coming up' : 'Nothing scheduled yet';
+    return this.monthEvents().length ? 'What\'s coming up' : 'Nothing scheduled yet';
   });
 
   protected readonly monthLabel = computed(() => {

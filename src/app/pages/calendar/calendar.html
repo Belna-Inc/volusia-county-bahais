@@ -9,8 +9,8 @@
     <p class="rule-heading-start eyebrow mb-7 text-accent">Gatherings</p>
     <h1 class="font-display text-headline font-semibold">Calendar</h1>
     <p class="mt-7 max-w-2xl text-lead text-neutral-content/75">
-      Devotional gatherings, study circles, children’s classes and junior youth groups across
-      Volusia County. Everything here is open to all — there is no need to be a Bahá’í, and no
+      Devotional gatherings, study circles, children's classes and junior youth groups across
+      Volusia County. Everything here is open to all — there is no need to be a Bahá'í, and no
       obligation, ever.
     </p>
   </div>
@@ -143,7 +143,7 @@
 
     @if (status() === 'error') {
       <p class="mt-7 max-w-2xl text-lead text-neutral-content/75">
-        The schedule couldn’t be reached just now. It may be a passing connection problem — please
+        The schedule couldn't be reached just now. It may be a passing connection problem — please
         try again.
       </p>
 
@@ -167,6 +167,16 @@
               <p class="mt-4 max-w-2xl leading-relaxed text-neutral-content/75">
                 {{ event.description }}
               </p>
+              @if (event.link) {
+                <a
+                  [href]="event.link"
+                  target="_blank"
+                  rel="noopener"
+                  class="focus-ring mt-4 inline-block font-semibold text-accent underline decoration-accent/40 underline-offset-4 hover:decoration-accent"
+                >
+                  Join online
+                </a>
+              }
             </div>
           </li>
         }
@@ -177,8 +187,8 @@
       </p>
     } @else {
       <p class="mt-7 max-w-2xl text-lead text-neutral-content/75">
-        There’s nothing on the calendar for {{ monthLabel() }}. Use the arrows above to look at
-        another month, or get in touch and we’ll let you know what’s next.
+        There's nothing on the calendar for {{ monthLabel() }}. Use the arrows above to look at
+        another month, or get in touch and we'll let you know what's next.
       </p>
     }
 
@@ -301,9 +311,18 @@
       </dl>
 
       <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-        <a routerLink="/" fragment="connect" class="btn btn-primary flex-1" (click)="closeEvent()">
-          Ask about this
-        </a>
+        @if (event.link) {
+          <a [href]="event.link" target="_blank" rel="noopener" class="btn btn-primary flex-1">
+            Join online
+          </a>
+          <a routerLink="/" fragment="connect" class="btn btn-outline flex-1" (click)="closeEvent()">
+            Ask about this
+          </a>
+        } @else {
+          <a routerLink="/" fragment="connect" class="btn btn-primary flex-1" (click)="closeEvent()">
+            Ask about this
+          </a>
+        }
         <button type="button" class="btn btn-outline flex-1" (click)="closeEvent()">Close</button>
       </div>
     </div>

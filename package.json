@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "images": "node scripts/optimize-images.mjs",
+    "seed": "node scripts/seed-events.mjs",
     "format": "prettier --write \"src/**/*.{ts,html,css}\"",
     "format:check": "prettier --check \"src/**/*.{ts,html,css}\""
   },

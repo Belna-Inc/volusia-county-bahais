@@ -76,8 +76,13 @@
   --color-base-300: oklch(29% 0.028 225);
   --color-base-content: oklch(93% 0.012 195);
 
+  /* Primary has to do two jobs in dark mode: tint link text against the dark
+     canvas, and fill buttons. Keeping it bright enough for the first (5.3:1 on
+     base-100) leaves white button labels at only 3.4:1, so the label goes deep
+     navy instead — 5.4:1, and consistent with how accent already pairs with a
+     dark accent-content. */
   --color-primary: oklch(62% 0.13 235);
-  --color-primary-content: oklch(98% 0.008 225);
+  --color-primary-content: oklch(16% 0.028 235);
 
   --color-secondary: oklch(65% 0.11 168);
   --color-secondary-content: oklch(16% 0.025 168);
@@ -279,6 +284,21 @@
     @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
   }
 
+  /* WCAG 2.5.8 asks for a 24×24 CSS-px minimum on pointer targets; the AAA
+     criterion and every platform touch guideline say 44. Applied to the icon
+     buttons, which would otherwise be sized by their glyph alone. */
+  .tap-target {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
+
+  /* Hairline rule for the calendar grid. Derived from base-content rather than
+     the flatter --color-base-300 so the cells stay separable, and it inverts
+     with the theme for free. */
+  .rule-grid {
+    background-color: color-mix(in oklch, var(--color-base-content) 20%, transparent);
+  }
+
   /* Footer navigation link — muted on the dark band, gold on hover/focus. */
   .footer-link {
     @apply text-neutral-content/85 transition hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
@@ -300,9 +320,14 @@
     transform-origin: left;
     transition: transform 0.25s ease;
   }
-  .nav-link:hover::after,
   .nav-link.is-active::after {
     transform: scaleX(1);
+  }
+  /* Guarded, or the underline sticks after a tap on a touch device. */
+  @media (hover: hover) {
+    .nav-link:hover::after {
+      transform: scaleX(1);
+    }
   }
   .nav-link.is-active {
     color: var(--color-primary);

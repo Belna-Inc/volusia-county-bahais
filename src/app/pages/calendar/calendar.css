@@ -1,26 +1,28 @@
-/* Month grid. `border-separate` with a 1px spacing over a base-300 background
-   gives hairline rules without doubled borders — the same trick the activity
-   cards on the home page use with `gap-px`. */
+/* Month grid. `border-separate` with a 1px spacing over the `.rule-grid`
+   background gives hairline rules without doubled borders — the same trick the
+   activity cards on the home page use with `gap-px`. */
 .calendar-grid .day-number {
   color: var(--color-base-content);
 }
 
-/* Days borrowed from the neighbouring months stay in the grid for shape, but
-   recede so the current month reads as a single block. */
+/* Days borrowed from the neighbouring months keep the grid rectangular but hold
+   no content: their numbers are dropped in the template rather than dimmed,
+   because any tint faint enough to read as "not this month" lands well under
+   4.5:1 against the cell behind it. */
 .calendar-grid .is-muted {
   background-color: color-mix(in oklch, var(--color-base-200) 60%, var(--color-base-100));
 }
-.calendar-grid .is-muted .day-number {
-  color: color-mix(in oklch, var(--color-base-content) 28%, transparent);
-}
 
-/* Today — a gold rule across the top of the cell rather than a ring, which
-   keeps the square shape language intact. */
+/* Today. A rule across the top of the cell rather than a ring, which keeps the
+   square shape language — in primary, not accent, because accent only reaches
+   2.1:1 on the light canvas. Colour is never the only signal: the cell also
+   carries a visually-hidden "Today" for screen readers. */
 .calendar-grid .is-today {
-  box-shadow: inset 0 3px 0 0 var(--color-accent);
+  box-shadow: inset 0 3px 0 0 var(--color-primary);
 }
 .calendar-grid .is-today .day-number {
   color: var(--color-primary);
+  font-weight: 700;
 }
 
 /* Event chip. Square, solid, and it shifts a hair on hover so it reads as
@@ -30,9 +32,63 @@
     transform 0.2s ease,
     background-color 0.2s ease;
 }
-.event-chip:hover {
-  transform: translateX(2px);
-  background-color: color-mix(in oklch, var(--color-primary) 85%, black);
+
+@media (hover: hover) {
+  .event-chip:hover {
+    transform: translateX(2px);
+    background-color: color-mix(in oklch, var(--color-primary) 85%, black);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Agenda — the mobile view. A seven-column grid cannot be made to work at
+   360px: the desktop table carries a 42rem minimum and simply overflows. Rather
+   than shrink it, the phone layout drops the grid entirely for a linear list of
+   the days that actually have something on them, which is also a far better
+   match for how a screen reader or a keyboard walks the page.
+--------------------------------------------------------------------------- */
+.agenda-row {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 0.25rem;
+  text-align: left;
+  border-top: 1px solid color-mix(in oklch, var(--color-base-content) 20%, transparent);
+  transition: background-color 0.2s ease;
+}
+
+.agenda-row:last-child {
+  border-bottom: 1px solid color-mix(in oklch, var(--color-base-content) 20%, transparent);
+}
+
+@media (hover: hover) {
+  .agenda-row:hover {
+    background-color: var(--color-base-200);
+  }
+}
+
+.agenda-row:active {
+  background-color: var(--color-base-200);
+}
+
+/* The date column: weekday over day-of-month, so the eye scans one narrow
+   rail down the page instead of re-reading a full date on every row. */
+.agenda-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 0.125rem;
+  line-height: 1.1;
+}
+
+.agenda-row.is-today .agenda-date {
+  color: var(--color-primary);
+}
+
+.agenda-row.is-today .agenda-day {
+  font-weight: 700;
 }
 
 /* Event detail dialog. The browser positions and centres a modal <dialog> and
@@ -65,6 +121,29 @@
   overflow-y: auto;
 }
 
+/* On a phone the dialog becomes a bottom sheet: full-width, anchored to the
+   thumb, and capped so the page behind stays visible as an escape hatch. */
+@media (max-width: 639px) {
+  .event-dialog {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    translate: none;
+    width: 100vw;
+    max-height: 88dvh;
+    border-inline: 0;
+    border-bottom: 0;
+  }
+
+  .event-dialog > * {
+    max-height: 88dvh;
+  }
+
+  .event-dialog[open] {
+    animation-name: sheet-in;
+  }
+}
+
 /* A literal colour rather than a theme token: ::backdrop inheritance from the
    originating element is too recent to rely on across browsers. */
 .event-dialog::backdrop {
@@ -87,6 +166,13 @@
   }
 }
 
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
 @keyframes backdrop-in {
   from {
     opacity: 0;
@@ -94,7 +180,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .event-chip {
+  .event-chip,
+  .agenda-row {
     transition: none;
   }
   .event-chip:hover {

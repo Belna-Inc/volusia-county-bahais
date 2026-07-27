@@ -23,6 +23,8 @@ export interface CommunityEvent {
   readonly time: string;
   readonly location: string;
   readonly description: string;
+  /** Optional join/details URL (e.g. a Zoom meeting) — empty when in person. */
+  readonly link: string;
   readonly kind: EventKind;
 }
 
@@ -122,6 +124,7 @@ function toEvent(id: string, data: Record<string, unknown>): CommunityEvent | nu
   }
 
   const kind = asString(data['kind']) as EventKind;
+  const link = asString(data['link']);
 
   return {
     id,
@@ -130,6 +133,8 @@ function toEvent(id: string, data: Record<string, unknown>): CommunityEvent | nu
     time: asString(data['time']),
     location: asString(data['location']),
     description: asString(data['description']),
+    // Only http(s) URLs become anchors — anything else stays out of the DOM.
+    link: /^https?:\/\//.test(link) ? link : '',
     kind: EVENT_KINDS.includes(kind) ? kind : 'other',
   };
 }
