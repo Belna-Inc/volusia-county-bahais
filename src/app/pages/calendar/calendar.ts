@@ -11,6 +11,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { CommunityEvent, Events } from '../../shared/events/events';
 import { Star } from '../../shared/star/star';
+import { Viewport } from '../../shared/viewport/viewport';
 
 /** A single cell in the month grid. */
 interface DayCell {
@@ -90,6 +91,8 @@ export class Calendar {
 
   /** Set once the visitor uses the arrows, so we stop moving the view for them. */
   private steered = false;
+
+  protected viewport = inject(Viewport);
 
   constructor() {
     afterNextRender(() => {

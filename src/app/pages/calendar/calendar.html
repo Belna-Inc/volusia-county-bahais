@@ -16,124 +16,126 @@
   </div>
 </section>
 
-<!-- ============================ MONTH GRID ============================ -->
-<section class="band-light py-16 sm:py-24">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <!-- Which month to show depends on today's date, and what to put in it comes
-         from Firestore — neither of which exists when this page is prerendered
-         at build time. A skeleton holds the space until the browser has both. -->
-    @if (!ready()) {
-      <div class="border-b border-base-300 pb-6">
-        <div class="skeleton h-9 w-56 rounded-none bg-base-300"></div>
-      </div>
-
-      <div class="mt-8 grid grid-cols-7 gap-px bg-base-300" aria-hidden="true">
-        @for (cell of skeletonCells; track $index) {
-          <div class="h-28 bg-base-100"></div>
-        }
-      </div>
-
-      <p class="sr-only" role="status">Loading the calendar.</p>
-    } @else {
-      <!-- Month navigation -->
-      <div class="flex items-center justify-between gap-4 border-b border-base-300 pb-6">
-        <h2 class="font-display text-subhead font-semibold">{{ monthLabel() }}</h2>
-
-        <div class="flex items-center gap-1">
-          <button
-            type="button"
-            class="btn btn-ghost btn-square btn-sm focus-ring"
-            aria-label="Previous month"
-            (click)="previousMonth()"
-          >
-            <svg
-              class="size-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              aria-hidden="true"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M14.5 5.5 8 12l6.5 6.5" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            class="btn btn-ghost btn-square btn-sm focus-ring"
-            aria-label="Next month"
-            (click)="nextMonth()"
-          >
-            <svg
-              class="size-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              aria-hidden="true"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9.5 5.5 16 12l-6.5 6.5" />
-            </svg>
-          </button>
+@if (!viewport.isMobile()) {
+  <!-- ============================ MONTH GRID ============================ -->
+  <section class="band-light py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <!-- Which month to show depends on today's date, and what to put in it comes
+          from Firestore — neither of which exists when this page is prerendered
+          at build time. A skeleton holds the space until the browser has both. -->
+      @if (!ready()) {
+        <div class="border-b border-base-300 pb-6">
+          <div class="skeleton h-9 w-56 rounded-none bg-base-300"></div>
         </div>
-      </div>
 
-      <!-- Grid. Hairline gaps rather than borders, matching the activity cards
-           on the home page. -->
-      <div class="mt-8 overflow-x-auto">
-        <table
-          class="calendar-grid w-full min-w-[42rem] border-separate border-spacing-px bg-base-300"
-        >
-          <caption class="sr-only">
-            Community gatherings for {{ monthLabel() }}
-          </caption>
-          <thead>
-            <tr>
-              @for (day of weekdays; track day) {
-                <th
-                  scope="col"
-                  class="bg-base-100 px-3 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-base-content/50"
-                >
-                  <span aria-hidden="true">{{ day.charAt(0) }}</span>
-                  <span class="sr-only">{{ day }}</span>
-                </th>
-              }
-            </tr>
-          </thead>
-          <tbody>
-            @for (week of weeks(); track $index) {
+        <div class="mt-8 grid grid-cols-7 gap-px bg-base-300" aria-hidden="true">
+          @for (cell of skeletonCells; track $index) {
+            <div class="h-28 bg-base-100"></div>
+          }
+        </div>
+
+        <p class="sr-only" role="status">Loading the calendar.</p>
+      } @else {
+        <!-- Month navigation -->
+        <div class="flex items-center justify-between gap-4 border-b border-base-300 pb-6">
+          <h2 class="font-display text-subhead font-semibold">{{ monthLabel() }}</h2>
+
+          <div class="flex items-center gap-1">
+            <button
+              type="button"
+              class="btn btn-ghost btn-square btn-sm focus-ring"
+              aria-label="Previous month"
+              (click)="previousMonth()"
+            >
+              <svg
+                class="size-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.5 5.5 8 12l6.5 6.5" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="btn btn-ghost btn-square btn-sm focus-ring"
+              aria-label="Next month"
+              (click)="nextMonth()"
+            >
+              <svg
+                class="size-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.5 5.5 16 12l-6.5 6.5" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Grid. Hairline gaps rather than borders, matching the activity cards
+            on the home page. -->
+        <div class="mt-8 overflow-x-auto">
+          <table
+            class="calendar-grid w-full min-w-[42rem] border-separate border-spacing-px bg-base-300"
+          >
+            <caption class="sr-only">
+              Community gatherings for {{ monthLabel() }}
+            </caption>
+            <thead>
               <tr>
-                @for (cell of week; track cell.key) {
-                  <td
-                    class="h-28 w-[14.28%] bg-base-100 p-2 align-top transition-colors"
-                    [class.is-muted]="!cell.inMonth"
-                    [class.is-today]="isToday(cell)"
+                @for (day of weekdays; track day) {
+                  <th
+                    scope="col"
+                    class="bg-base-100 px-3 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-base-content/50"
                   >
-                    <span class="day-number font-display text-lg font-semibold">
-                      {{ cell.day }}
-                    </span>
-
-                    @for (event of cell.events; track event.id) {
-                      <button
-                        type="button"
-                        class="event-chip mt-1.5 block w-full bg-primary px-2 py-1 text-left text-[0.7rem] font-semibold leading-tight text-primary-content focus-ring"
-                        [attr.aria-label]="
-                          event.title + ' — ' + formatDate(event.date) + ', ' + event.time
-                        "
-                        (click)="openEvent(event)"
-                      >
-                        {{ event.title }}
-                      </button>
-                    }
-                  </td>
+                    <span aria-hidden="true">{{ day.charAt(0) }}</span>
+                    <span class="sr-only">{{ day }}</span>
+                  </th>
                 }
               </tr>
-            }
-          </tbody>
-        </table>
-      </div>
-    }
-  </div>
-</section>
+            </thead>
+            <tbody>
+              @for (week of weeks(); track $index) {
+                <tr>
+                  @for (cell of week; track cell.key) {
+                    <td
+                      class="h-28 w-[14.28%] bg-base-100 p-2 align-top transition-colors"
+                      [class.is-muted]="!cell.inMonth"
+                      [class.is-today]="isToday(cell)"
+                    >
+                      <span class="day-number font-display text-lg font-semibold">
+                        {{ cell.day }}
+                      </span>
+
+                      @for (event of cell.events; track event.id) {
+                        <button
+                          type="button"
+                          class="event-chip mt-1.5 block w-full bg-primary px-2 py-1 text-left text-[0.7rem] font-semibold leading-tight text-primary-content focus-ring"
+                          [attr.aria-label]="
+                            event.title + ' — ' + formatDate(event.date) + ', ' + event.time
+                          "
+                          (click)="openEvent(event)"
+                        >
+                          {{ event.title }}
+                        </button>
+                      }
+                    </td>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+  </section>
+}
 
 <!-- ============================ EVENT DETAIL ============================ -->
 <section class="band-dark py-20 sm:py-28">
