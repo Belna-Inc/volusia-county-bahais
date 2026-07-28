@@ -36,9 +36,7 @@
   <div class="hero-overlay absolute inset-0 -z-10"></div>
 
   <div class="mx-auto w-full max-w-7xl px-4 pb-20 pt-32 sm:px-6 sm:pb-28 lg:px-8">
-    <p class="rule-heading-start eyebrow mb-8 text-accent">Bahá'í Community of Volusia County</p>
-
-    <h1 class="font-display text-display max-w-[14ch] font-medium text-white">We are one</h1>
+    <h1 class="font-display text-display max-w-[14ch] font-medium text-white">Welcome</h1>
 
     <p
       class="mt-8 max-w-2xl font-display text-subhead italic text-white/90"
@@ -100,10 +98,10 @@
 
     <!-- Quote block — breaks the container gutter on wide viewports. -->
     <figure class="reveal lg:col-span-7 lg:-mr-8 xl:-mr-16">
-      <div class="quote-card relative overflow-hidden p-10 text-primary-content sm:p-16">
+      <div class="relative overflow-hidden p-10 sm:p-16">
         <app-star
           variant="outline"
-          class="pointer-events-none absolute -right-10 -top-10 size-56 text-white/10"
+          class="pointer-events-none absolute right-0 top-50 size-32 text-accent/80"
         />
         <blockquote class="relative font-display text-headline font-medium italic">
           “Ye are all the leaves of one tree and the drops of one ocean.”
@@ -120,7 +118,7 @@
     <div class="reveal mx-auto max-w-3xl text-center">
       <p class="rule-heading eyebrow text-accent">The Bahá'í Faith</p>
       <h2 class="mt-6 font-display text-headline font-semibold">
-        A faith built on <span class="italic text-accent">oneness</span>.
+        God is <span class="text-accent">love</span>. We are <span class="text-accent">one</span>.
       </h2>
       <p class="mt-7 text-lead text-neutral-content/75">
         The Bahá'í Faith is among the youngest of the world's independent religions. Founded by
@@ -133,8 +131,7 @@
     <!-- Progressive revelation -->
     <div class="reveal mt-16 border-y border-neutral-content/15 px-2 py-14 text-center sm:px-6">
       <p class="mx-auto max-w-3xl font-display text-subhead italic text-neutral-content/90">
-        Throughout history, God has sent a succession of divine Educators — the Manifestations of
-        God — whose teachings are successive chapters of one unfolding religion.
+        Throughout history, God has sent a succession of prophets whose teachings form successive chapters of one unfolding religion.
       </p>
       <ul
         class="mx-auto mt-10 flex max-w-4xl flex-wrap items-center justify-center gap-x-1 gap-y-3 text-sm uppercase tracking-[0.12em] text-neutral-content/60"
@@ -149,70 +146,6 @@
         }
       </ul>
     </div>
-  </div>
-</section>
-
-<!-- ============================ COMMUNITY LIFE ============================ -->
-<section id="community" class="band-light py-24 sm:py-32">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="reveal mx-auto max-w-2xl text-center">
-      <p class="rule-heading eyebrow text-primary">Community Life</p>
-      <h2 class="mt-6 font-display text-headline font-semibold">Four ways we grow together.</h2>
-      <p class="mt-6 text-lead text-base-content/75">
-        The Bahá'í community is a global community built on local connections. Its life centers on a
-        few simple activities — held in homes and community spaces, and open to people of every age
-        and background.
-      </p>
-    </div>
-
-    <div class="activity-grid mt-16 grid gap-px bg-base-300 sm:grid-cols-2 lg:grid-cols-4">
-      @for (a of activities; track a.title; let i = $index) {
-        <article
-          class="group reveal flex flex-col bg-base-100 p-8 transition-colors duration-300 hover:bg-primary hover:text-primary-content"
-        >
-          <div class="flex items-center justify-between">
-            <div
-              class="flex size-12 items-center justify-center bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary-content/15 group-hover:text-primary-content"
-            >
-              <svg
-                class="size-6"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-                aria-hidden="true"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="a.icon" />
-              </svg>
-            </div>
-            <span
-              class="font-display text-4xl font-semibold text-base-content/15 transition-colors duration-300 group-hover:text-primary-content/40"
-              aria-hidden="true"
-            >
-              0{{ i + 1 }}
-            </span>
-          </div>
-
-          <span
-            class="mt-6 inline-block w-fit bg-accent/25 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-accent-content transition-colors duration-300 group-hover:bg-primary-content/20 group-hover:text-primary-content"
-          >
-            {{ a.audience }}
-          </span>
-          <h3 class="mt-4 font-display text-2xl font-semibold">{{ a.title }}</h3>
-          <p
-            class="mt-3 text-sm leading-relaxed text-base-content/70 transition-colors duration-300 group-hover:text-primary-content/80"
-          >
-            {{ a.body }}
-          </p>
-        </article>
-      }
-    </div>
-
-    <p class="mx-auto mt-14 max-w-xl text-center text-base-content/60">
-      Curious about any of these?
-      <a href="#connect" class="link font-medium text-primary underline-offset-4">Reach out</a> —
-      we'd be delighted to welcome you.
-    </p>
   </div>
 </section>
 
@@ -260,36 +193,6 @@
                 <span class="text-neutral-content/50"> (1-800-228-6483)</span>
               </dd>
             </div>
-          </div>
-
-          <div class="flex items-start gap-5">
-            <span class="flex size-12 shrink-0 items-center justify-center bg-accent/15 text-accent">
-              <svg
-                class="size-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.7"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
-                />
-              </svg>
-            </span>
-            <!-- <div>
-              <dt class="eyebrow text-neutral-content/45">By email</dt>
-              <dd class="mt-1.5">
-                <a
-                  class="text-lg font-medium text-neutral-content transition hover:text-accent focus-ring"
-                  href="mailto:hello@volusiabahais.org"
-                >
-                  hello&#64;volusiabahais.org
-                </a>
-              </dd>
-            </div> -->
           </div>
 
           <div class="flex items-start gap-5">

@@ -23,12 +23,6 @@
     );
 }
 
-/* Quote block in the welcome section — ocean blue falling away into deep
-   sea green, breaking the container gutter on wide viewports. */
-.quote-card {
-  background: linear-gradient(140deg, var(--color-primary) 0%, oklch(30% 0.075 175) 100%);
-}
-
 /* Stagger the activity cards so the row cascades in rather than arriving all
    at once. Each card's reveal simply completes a little later than the last. */
 .activity-grid > :nth-child(1) {
